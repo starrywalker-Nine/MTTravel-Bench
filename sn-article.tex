@@ -1,0 +1,780 @@
+%Version 3.1 December 2024
+% See section 11 of the User Manual for version history
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                 %%
+%% Please do not use \input{...} to include other tex files.       %%
+%% Submit your LaTeX manuscript as one .tex document.              %%
+%%                                                                 %%
+%% All additional figures and files should be attached             %%
+%% separately and not embedded in the \TeX\ document itself.       %%
+%%                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\documentclass[referee,sn-basic]{sn-jnl}% referee option is meant for double line spacing
+
+%%=======================================================%%
+%% to print line numbers in the margin use lineno option %%
+%%=======================================================%%
+
+%%\documentclass[lineno,pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%=========================================================================================%%
+%% the documentclass is set to pdflatex as default. You can delete it if not appropriate.  %%
+%%=========================================================================================%%
+
+%%\documentclass[sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%Note: the following reference styles support Namedate and Numbered referencing. By default the style follows the most common style. To switch between the options you can add or remove Numbered in the optional parenthesis. 
+%%The option is available for: sn-basic.bst, sn-chicago.bst%  
+ 
+%%\documentclass[pdflatex,sn-nature]{sn-jnl}% Style for submissions to Nature Portfolio journals
+%%\documentclass[pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}% Math and Physical Sciences Numbered Reference Style
+%%\documentclass[pdflatex,sn-mathphys-ay]{sn-jnl}% Math and Physical Sciences Author Year Reference Style
+%%\documentclass[pdflatex,sn-aps]{sn-jnl}% American Physical Society (APS) Reference Style
+%%\documentclass[pdflatex,sn-vancouver-num]{sn-jnl}% Vancouver Numbered Reference Style
+%%\documentclass[pdflatex,sn-vancouver-ay]{sn-jnl}% Vancouver Author Year Reference Style
+%%\documentclass[pdflatex,sn-apa]{sn-jnl}% APA Reference Style
+%%\documentclass[pdflatex,sn-chicago]{sn-jnl}% Chicago-based Humanities Reference Style
+
+%%%% Standard Packages
+%%<additional latex packages if required can be included here>
+
+\usepackage{graphicx}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\usepackage{amsthm}%
+\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+\usepackage{listings}%
+%%%%
+\usepackage[T1]{fontenc} 
+%%%%%=============================================================================%%%%
+%%%%  Remarks: This template is provided to aid authors with the preparation
+%%%%  of original research articles intended for submission to journals published 
+%%%%  by Springer Nature. The guidance has been prepared in partnership with 
+%%%%  production teams to conform to Springer Nature technical requirements. 
+%%%%  Editorial and presentation requirements differ among journal portfolios and 
+%%%%  research disciplines. You may find sections in this template are irrelevant 
+%%%%  to your work and are empowered to omit any such section if allowed by the 
+%%%%  journal you intend to submit to. The submission guidelines and policies 
+%%%%  of the journal take precedence. A detailed User Manual is available in the 
+%%%%  template package for technical guidance.
+%%%%%=============================================================================%%%%
+
+%% as per the requirement new theorem styles can be included as shown below
+\theoremstyle{thmstyleone}%
+\newtheorem{theorem}{Theorem}%  meant for continuous numbers
+%%\newtheorem{theorem}{Theorem}[section]% meant for sectionwise numbers
+%% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
+\newtheorem{proposition}[theorem]{Proposition}% 
+%%\newtheorem{proposition}{Proposition}% to get separate numbers for theorem and proposition etc.
+
+\theoremstyle{thmstyletwo}%
+\newtheorem{example}{Example}%
+\newtheorem{remark}{Remark}%
+
+\theoremstyle{thmstylethree}%
+\newtheorem{definition}{Definition}%
+
+\raggedbottom
+%%\unnumbered% uncomment this for unnumbered level heads
+
+\begin{document}
+
+\title{MTTravel-Bench: A Dynamic Narrative Benchmark for Evaluating Mental-Time-Travel Option Reasoning and Factual Foresight in Large Language Models}
+%%=============================================================%%
+%% GivenName	-> \fnm{Joergen W.}
+%% Particle	-> \spfx{van der} -> surname prefix
+%% FamilyName	-> \sur{Ploeg}
+%% Suffix	-> \sfx{IV}
+%% \author*[1,2]{\fnm{Joergen W.} \spfx{van der} \sur{Ploeg} 
+%%  \sfx{IV}}\email{iauthor@gmail.com}
+%%=============================================================%%
+
+\author[1,2,3]{\fnm{Qing} \sur{Li}}\email{tsingleer@ieee.org}
+
+\author[1]{\fnm{Qian} \sur{Fu}}\email{fuqian.gdxlzxzx@gmail.com}
+% \equalcont{These authors contributed equally to this work.}
+
+\author*[1,2,3]{\fnm{Yongbin} \sur{Qin}}\email{ybqin@gzu.edu.cn}
+
+\affil[1]{\orgdiv{Guizhou Provincial Laboratory of Big Data, State Key Laboratory of Public Big Data}, \orgname{Guizhou University}, \orgaddress{\city{Guiyang}, \postcode{550025}, \state{Guizhou}, \country{China}}}
+
+\affil[2]{\orgdiv{College of Computer Science and Technology}, \orgname{Guizhou University}, \orgaddress{ \city{Guiyang}, \postcode{550025}, \state{Guizhou}, \country{China}}}
+
+\affil*[3]{\orgdiv{Text Computing and Cognitive Intelligence Engineering Research Center of National Education Ministry}, \orgname{Guizhou University}, \orgaddress{ \city{Guiyang}, \postcode{550025}, \state{Guizhou}, \country{China}}}
+
+%%==================================%%
+%% Sample for unstructured abstract %%
+%%==================================%%
+
+\abstract{In recent years, the evaluation of large language models has been shifting from static question-answering tasks toward dynamic behavioral assessment. However, existing evaluations still rely on short texts or isolated tasks, and therefore lack a systematic characterization of how models perform action reasoning in continuous contexts. In particular, they provide limited evidence on whether models can integrate past experience, current states, and future consequences during decision-making. The theory of mental time travel in cognitive science provides a core construct for understanding this capacity. It describes the ability of individuals to reconstruct past experiences, project the self into possible future situations, and maintain self-continuity across time. To introduce this construct into the evaluation of large language models, this paper proposes MTTravel-Bench, a dynamic narrative benchmark that operationalizes mental time travel as an NLP evaluation task. MTTravel-Bench is constructed from TellMeWhy, NTSB aviation accident reports, and FairytaleQA, covering everyday causal narratives, real-world accident narratives, and fictional long-range narratives. MTTravel-Bench transforms narrative episodes into decision-node-centered trajectories and represents event order, causal dependencies, and reachable future paths using directed acyclic graphs. At each decision node, the benchmark generates temporally grounded action options and maps them onto three dimensions of mental time travel: spatiotemporal reconstruction, self-projection, and self-state consistency. Meanwhile, the benchmark identifies factual options that follow the original narrative trajectory, enabling the evaluation of models' ability to predict subsequent factual outcomes. The evaluation consists of two tasks. Task 1 evaluates whether models can infer the mental time travel dimension reflected by each candidate option. Task 2 evaluates whether models can predict subsequent factual outcomes based on factual options. Experimental results across multiple models show that MTTravel-Bench provides an interdisciplinary evaluation platform connecting cognitive science and NLP evaluation. It enables the assessment of whether large language models can connect past narrative states, current decision constraints, and future factual outcomes in dynamic narrative contexts.}
+
+%%================================%%
+%% Sample for structured abstract %%
+%%================================%%
+
+% \abstract{\textbf{Purpose:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
+% 
+% \textbf{Methods:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
+% 
+% \textbf{Results:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
+% 
+% \textbf{Conclusion:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.}
+
+\keywords{large language models; dynamic benchmark; narrative consequence prediction; directed acyclic graph; factual foresight; AI agent evaluation.}
+
+%%\pacs[JEL Classification]{D8, H51}
+
+%%\pacs[MSC Classification]{35A01, 65L10, 65L12, 65L20, 65L70}
+
+\maketitle
+
+\section{Introduction}\label{sec1}
+
+In much of the contemporary benchmark evaluation of large language models, benchmark design has been organised around the measurement of task competence under standardised and instance-level conditions \cite{srivastava2022beyond}. A representative direction is multitask knowledge evaluation, where models are assessed across a wide range of academic and professional domains through independent question-answering instances, as in Massive Multitask Language Understanding (MMLU) \cite{hendrycks2020measuring} . More recent holistic evaluation frameworks further broaden this scope by incorporating multiple scenarios, metrics, and model behaviours, yet they largely retain the same evaluative unit: a predefined task instance whose output can be scored independently of the model's prior actions, as exemplified by Holistic Evaluation of Language Models (HELM) \cite{liang2022holistic}. This approach has enabled systematic comparison across models and has substantially advanced the measurement of general language-model capability; however, it also embeds a restrictive assumption: that the capability under evaluation can be approximated as a static input-output mapping, measurable one instance at a time, without requiring an account of how previous actions, accumulated experience, or evolving states condition subsequent decisions.
+
+Recent research has shifted from static benchmark evaluation toward treating large language models as agents that must operate under environmental constraints, rather than merely as answer generators. One line of research focuses on constructing general agent evaluation frameworks, using multiple interactive environments to assess models' reasoning, planning, and decision-making abilities across diverse task settings. This direction is reflected in work that designs multi-environment, multi-task interactive evaluation systems; for example, AgentBench systematically evaluates LLMs as agents across a range of interactive scenarios, moving beyond isolated question-answering instances and emphasizing reasoning and decision-making in complex environments as core evaluation targets \cite{liu2023agentbench}. A second line of research moves toward more realistic and operationally constrained environments, requiring agents to complete long-horizon tasks through concrete interactions with external systems. This direction is reflected in work that builds environments with realistic operational interfaces; for example, WebArena provides functional web environments in which agents must translate high-level natural language goals into multi-step actions over websites and information resources, thereby evaluating their execution capabilities in realistic interactive settings \cite{zhou2023webarena}. Together, these approaches mark a shift in evaluation paradigms from static task accuracy to interactive action competence. However, they still leave open a more specific problem: how to evaluate whether an agent can leverage prior narrative state, distinguish structurally different action alternatives, and anticipate the downstream consequences of a specified action within an extended causal-temporal trajectory.
+
+The cognitive motivation for this benchmark draws on a broader literature on future-oriented cognition. Early work on episodic future thinking defined the ability to imagine personally relevant future events as projecting the self into the future, rather than simply extending semantic knowledge \cite{atance2001episodic}. This idea was further developed in research on mental time travel and foresight, which treats remembering the personal past and imagining possible futures as closely related abilities that support anticipatory behavior \cite{suddendorf2007evolution}. A related line of work on constructive episodic simulation argues that episodic memory is not a passive store of past events; instead, details from prior experiences can be selectively retrieved and flexibly recombined to construct simulations of possible future scenarios \cite{schacter2007cognitive}. More recent studies have clarified the cognitive and neural mechanisms as well as the functional roles of episodic future thinking \cite{schacter2017episodic}, while work on prospection places episodic simulation within a broader set of future-oriented cognitive processes, including prediction, planning, intention, and evaluation \cite{szpunar2014taxonomy}.
+
+This body of research provides the conceptual motivation for our benchmark, but the present work does not aim to directly measure human mental time travel. Instead, we reformulate future-oriented cognition as a well-defined and computationally tractable task framework. Specifically, we examine whether an LLM can represent alternative actions and predict the consequences of factual actions within a dynamic narrative trajectory. In this setting, the key question is not whether the model possesses human-like episodic awareness, but whether it can effectively leverage prior narrative state, distinguish between structurally different candidate actions, and make consistent and plausible inferences about what follows from a specified action under the causal and temporal constraints imposed by the story.
+
+Adjacent benchmark research has addressed parts of this problem from several complementary directions. One line of work focuses on forecasting tasks, evaluating whether AI systems can produce well-calibrated probabilistic predictions over future events under dynamically evolving evaluation distributions. ForecastBench represents this paradigm by constructing a continuously updated benchmark to measure forecasting accuracy on future-oriented queries \cite{karger2024forecastbench}. A second line of work targets temporal reasoning as a core capability, isolating whether models can correctly process temporal relations, temporal logic, and temporal arithmetic within controlled experimental settings. Test of Time exemplifies this direction by leveraging synthetic datasets to systematically evaluate LLMs across diverse temporal reasoning tasks while minimizing data leakage from real-world corpora \cite{fatemi2024test}. A third line of work investigates long-term memory in interactive systems, examining whether conversational agents can perform retrieval, state updating, and reasoning over information distributed across extended multi-turn interaction histories. LongMemEval is representative of this approach, as it benchmarks capabilities such as information extraction, cross-session reasoning, temporal reasoning, knowledge updating, and abstention in long-horizon interactions \cite{wu2024longmemeval}.
+
+These benchmarks have significantly advanced the evaluation of future-oriented prediction, temporal inference, and long-context retrieval. However, they do not fully integrate action alternatives, local causal dependencies, and factual trajectory continuation into a unified evaluation instance. Forecasting benchmarks typically assess predictive judgments over future events, rather than modeling the downstream consequences of a specified action within a structured narrative trajectory. Temporal reasoning benchmarks isolate time-sensitive inference, but generally do not require models to perform comparative reasoning over alternative actions under explicit local causal constraints. Long-term memory benchmarks evaluate whether historical context can be retrieved and utilized across extended interaction sequences, but they do not explicitly test whether an action selected at a decision node leads to a causally consistent factual continuation. Consequently, when a model fails under existing evaluation protocols, it remains challenging to attribute the failure to specific factors such as option misinterpretation, state tracking errors, violations of causal-temporal constraints, or hallucinated outcome generation.
+
+A further motivation comes from recent work on benchmark validity and evaluation science. This line of research argues that benchmarks should not be understood merely as collections of test items, but as measurement instruments whose scores are meaningful only when the target construct, task design, scoring procedure, and interpretive claims are explicitly aligned. Specifically, Wallach et al. frame generative AI evaluation as a measurement problem, emphasizing that one must first define the capability or behavior being measured and then explain how task performance serves as evidence for that construct \cite{wallach2025position}. Building on this, Bean et al. analyze LLM benchmarks from the perspective of construct validity, showing that benchmark conclusions become unreliable when the measured phenomenon is poorly specified, when task instances are not clearly mapped to that phenomenon, or when evaluation metrics fail to support the intended interpretation \cite{bean2025measuring}. In parallel, Weidinger et al. argue at the level of evaluation frameworks that current static benchmark scores widely face validity challenges, and therefore call for the development of an evaluation science that is methodologically transparent, iterative, and closer to real-world deployment settings \cite{weidinger2025evaluation}. These perspectives collectively highlight a central issue: if narrative decision competence is compressed into a single aggregate score, it becomes difficult to determine whether the score reflects option understanding, state tracking, causal constraint utilization, or consequence prediction.
+
+Accordingly, our benchmark adopts a measurement-oriented design by decomposing narrative decision competence into two separable evaluation targets. The first target is option structure scoring, which measures whether candidate actions can be structurally distinguished based on prior narrative state, local causal constraints, and plausible future trajectories. The second target is fact-conditioned consequence prediction, which measures whether the model can infer the actual subsequent outcomes in the narrative trajectory given a specified factual action. This decomposition makes the benchmark more diagnostic: rather than producing only a leaderboard-style aggregate ranking, it enables more precise attribution of model errors to option misinterpretation, state-tracking failure, violations of causal-temporal constraints, or hallucinated consequence generation. This caution is consistent with recent critiques of leaderboard-based evaluation, which show that aggregate rankings can obscure the underlying mechanisms of performance differences and should therefore be interpreted with care \cite{singh2025leaderboard,blackwell2024reproducible,madaan2024quantifying}.
+
+To address these gaps, this paper proposes MTTravel-Bench, a benchmark for evaluating how generative language models reason about decisions and consequences in temporally extended narratives. The benchmark is motivated by mental time travel as a cognitive construct, but it does not assume that language models possess human-like episodic memory or subjective future experience. Instead, it operationalizes the relevant functional structure of this construct: using prior narrative context to interpret a present decision, forming expectations about possible actions, and predicting the consequences that follow from an action. In this sense, MTTravel-Bench provides an AI-oriented measurement framework inspired by cognitive psychology, rather than a direct psychological test of machine experience.
+
+Figure 1 illustrates a concrete measurement case in MTTravel-Bench. A narrative episode is presented up to a key decision point. At this point, the model receives the prior context and several visible candidate actions. The first measurement asks whether the model can estimate the structural profile of each candidate action, including whether the action requires reconstructing prior temporal-causal information, projecting the future state of the actor or relevant subject, maintaining consistency with the previous trajectory, or producing higher local utility. The second measurement fixes the factual action and asks the model to predict the consequence structure that follows. The figure therefore shows what is measured in a decision-node instance: candidate-action expectation and factual-action consequence prediction.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.86\linewidth}{\centering Figure placeholder.\\[0.5em]A measurement case in MTTravel-Bench. The model receives a prior narrative context and candidate actions at a key decision node. The benchmark measures candidate-action structural expectations and fact-conditioned consequence prediction.}}
+\caption{A measurement case in MTTravel-Bench. The model receives a prior narrative context and candidate actions at a key decision node. The benchmark measures candidate-action structural expectations and fact-conditioned consequence prediction.}
+\label{fig:measurement-case}
+\end{figure}
+A key feature of MTTravel-Bench is that it can be built from existing narrative materials rather than requiring a manually authored interactive environment. The benchmark transforms public narrative sources into causal-temporal structures that preserve states, actions, constraints, and observable consequences. This transformation allows existing stories, accident reports, and everyday causal narratives to be used as decision-centered evaluation material. The detailed construction procedure is described in the methodology section; in the introduction, the central point is that the benchmark converts already available narrative evidence into measurable decision-and-consequence instances.
+
+This paper makes four contributions. First, it introduces MTTravel-Bench, a benchmark for evaluating generative language models at key decision points in temporally extended narratives. The benchmark focuses on whether models can use prior context to interpret candidate actions and anticipate factual consequences under changing narrative states. Second, it proposes a way to construct causal-temporal decision structures from existing narrative materials. This makes it possible to convert heterogeneous narrative sources into decision-node-centered evaluation instances without treating narratives as open-ended continuation tasks. Third, it introduces a measurement approach that connects candidate-action expectations and behavioral consequences with cognitive-psychology-inspired constructs. By separating candidate-action structure profiling from fact-conditioned consequence prediction, the benchmark provides a concrete way to test generative models on functional analogues of temporal reconstruction, future projection, trajectory consistency, and consequence reasoning. Fourth, it supports systematic comparison across narrative domains. By covering everyday causal narratives, high-stakes accident narratives, and fictional long-horizon narratives, MTTravel-Bench enables analysis of whether model performance is stable across different forms of narrative state, action constraint, and consequence structure.
+\section{Related Works}
+This section reviews prior work relevant to evaluating LLMs in dynamic narrative decision settings. Existing benchmarks have examined interactive agents, long-horizon planning, temporal reasoning, memory use, trajectory-level behavior, and human-comparable evaluation. These directions provide important foundations, but they usually treat action, memory, time, and consequence as separate evaluation targets. MTTravel-Bench builds on this literature by placing these elements within a unified decision-node-centered setting, where candidate actions are evaluated against prior narrative context and factual continuations.
+
+Table~\ref{tab:related-work-map} summarizes the main literature streams reviewed in this section. The table is intended as a reading map: each row groups representative documents by evaluation mechanism, identifies the capability they primarily measure, and clarifies the specific gap that motivates the MTTravel-Bench design.
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\caption{Literature map for the Related Works section. The cited documents are grouped by the main evaluation line they contribute to, rather than by chronology.}
+\label{tab:related-work-map}
+\begin{tabular}{p{0.15\textwidth} p{0.30\textwidth} p{0.23\textwidth} p{0.25\textwidth}}
+\toprule
+Research line & Representative documents & Primary evaluation target & Limitation addressed by MTTravel-Bench \\
+\midrule
+Interactive and long-horizon agents & TextWorld \cite{cote2018textworld}, Jericho \cite{hausknecht2019interactive}, ALFWorld \cite{shridhar2020alfworld}, WebShop \cite{yao2022webshop}, Mind2Web \cite{deng2023mind2web}, AgentBench \cite{liu2023agentbench}, WebArena \cite{zhou2023webarena}, OSWorld \cite{xie2024osworld}, AppWorld \cite{trivedi2024appworld}, Tau-bench \cite{yao2024bench}, ToolSandbox \cite{lu2024toolsandbox}, TheAgentCompany \cite{xu2024theagentcompany} & Sequential interaction, task completion, web/OS/API operation, and final-state correctness & These benchmarks test whether an agent completes a task, but rarely isolate whether it understands candidate options or predicts the factual consequence of a specified action before acting. \\
+Static-to-dynamic benchmark construction & Static benchmark critique \cite{bowman2021take}, Dynabench \cite{kiela2021dynabench}, DynaCode \cite{hu2025dynacode}, Meta Probing Agents \cite{zhu2024dynamic} & Adaptive item construction, adversarial or model-in-the-loop data generation, and difficulty-controlled probing & Existing dynamic evaluation mainly changes the item distribution; MTTravel-Bench makes the task structure dynamic by representing state transitions and decision dependencies in a DAG. \\
+Temporal reasoning and forecasting & Test of Time \cite{fatemi2024test}, TimelineQA \cite{tan2023timelineqa}, TIME \cite{wei2025time}, UnSeenTimeQA \cite{uddin2024unseentimeqa}, AutoCast \cite{zou2022forecasting}, ForecastBench \cite{karger2024forecastbench}, retrieval-augmented forecasting \cite{halawi2024approaching} & Temporal relation processing, temporal QA, and probabilistic prediction of future events & These tasks evaluate time or forecasting directly, but do not jointly measure action alternatives, local causal constraints, and factual continuation after a specified action. \\
+Computational memory and experience-driven agents & LongMemEval \cite{wu2024longmemeval}, MemoryAgentBench \cite{hu2025evaluating}, MemGPT \cite{packer2023memgpt}, Reflexion \cite{shinn2023reflexion}, Generative Agents \cite{park2023generative}, Voyager \cite{wang2023voyager} & Memory storage, retrieval, updating, reflection, and reuse across long-horizon interactions & These studies treat memory as an operational mechanism; MTTravel-Bench tests whether prior narrative state supports MTT-inspired option interpretation and consequence prediction. \\
+Mental time travel and construct-valid evaluation & Episodic future thinking \cite{atance2001episodic}, mental time travel and foresight \cite{suddendorf2007evolution}, benchmark construct validity \cite{bean2025measuring}, annotation-artifact analysis \cite{gururangan2018annotation} & Human-inspired future-oriented cognition and measurement validity & MTTravel-Bench does not claim human-like subjective experience; it converts the functional structure of MTT into explicit AI inputs, hidden targets, and scoring metrics. \\
+Process-sensitive trajectory evaluation & AgentBoard \cite{ma2024agentboard}, TRAJECT-Bench \cite{he2025trajectbencha} & Intermediate progress, trajectory errors, tool selection, dependency satisfaction, and execution order & Prior trajectory analysis is mainly procedural; MTTravel-Bench shifts process-sensitive evaluation to narrative state, action meaning, and consequence structure. \\
+Human-comparable evaluation & GAIA \cite{mialon2023gaia}, HCAST \cite{rein2025hcast}, RE-Bench \cite{wijk2024rebench}, human-machine comparison frameworks \cite{cowley2022framework,lee2022evaluating} & Matched human-AI task interfaces, resources, and success criteria & These works motivate careful comparison, while MTTravel-Bench focuses on AI-specific structured measurement before introducing calibrated human or expert baselines. \\
+LLM-as-judge and reasoning baselines & MT-Bench and Chatbot Arena \cite{zheng2023judging}, G-Eval \cite{liu2023geval}, CheckEval \cite{lee2025checkeval}, ReAct \cite{yao2022react}, PreAct \cite{fu2025preact}, CLIN \cite{majumder2023clin}, Agent Workflow Memory \cite{wang2024agent} & Preference judging, checklist evaluation, reasoning-action prompting, explicit prediction, and memory-augmented workflows & These methods are useful evaluators or candidate baselines, but the primary MTTravel-Bench signal comes from DAG-derived option scores and factual consequence labels. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Interactive and Long-Horizon Agent Benchmarks}
+Research on interactive agent benchmarks has progressively moved from text-based interaction to realistic digital workflows. Early environments such as TextWorld, Jericho, and ALFWorld established the importance of evaluating language agents through sequential interaction rather than isolated response generation. TextWorld provided a controllable framework for text-based games with interactive play-through, state tracking, and reward assignment \cite{cote2018textworld}. Jericho extended this setting to human-authored interactive fiction games, where agents must issue textual commands to change the environment and progress through the story \cite{hausknecht2019interactive}. ALFWorld further connected abstract text-based policies with embodied execution by aligning TextWorld-style textual environments with visually grounded household tasks \cite{shridhar2020alfworld}. Together, these works showed that declarative language competence does not automatically translate into executable sequential action under changing states, affordances, and goals.
+
+Subsequent benchmarks expanded this interaction paradigm from text games to web-based and multi-environment agent tasks. WebShop introduced grounded web interaction in a simulated e-commerce environment, requiring agents to navigate webpages and satisfy compositional shopping instructions \cite{yao2022webshop}. Mind2Web broadened web-agent evaluation to real-world websites across diverse domains, emphasizing generalization across tasks, websites, and interaction patterns\cite{deng2023mind2web}. AgentBench then framed LLM-agent evaluation more generally by testing models across multiple interactive environments, foregrounding reasoning and decision-making in multi-turn settings \cite{liu2023agentbench}. WebArena further moved toward realistic and reproducible web environments, where agents must transform high-level natural language goals into concrete operations over functional websites and external resources, with success judged by functional correctness \cite{zhou2023webarena}. These benchmarks mark an important shift from static task accuracy to interactive task completion.
+
+More recent environments have made agent evaluation increasingly operational and state-aware. OSWorld evaluates multimodal agents in real computer environments involving desktop applications, files, and cross-application operations \cite{xie2024osworld}. AppWorld constructs a controllable ecosystem of daily-life apps and APIs, using state- and execution-based unit tests to verify whether agents complete tasks without unintended state changes \cite{trivedi2024appworld}. Tau-bench focuses on tool-agent-user interaction, evaluating whether agents can follow domain policies and reach the correct final database state through conversations with simulated users \cite{yao2024bench}. ToolSandbox further emphasizes stateful tool execution, implicit dependencies among tools, and milestone-based evaluation over arbitrary conversational trajectories \cite{lu2024toolsandbox}. TheAgentCompany extends this operational framing to professional digital work by simulating a software-company environment in which agents browse the web, write code, run programs, and communicate with coworkers \cite{xu2024theagentcompany}.
+
+This chronological progression shows that LLM-agent benchmarks have become increasingly interactive, realistic, reproducible, and state-sensitive. However, their central evaluation target remains task completion, functional correctness, final-state matching, or workflow success. Even when these benchmarks incorporate state verification or milestone checking, such mechanisms are usually used to judge whether an agent has completed a task, rather than to isolate whether the agent anticipated the consequence of an action before acting. In other words, prior interactive benchmarks evaluate whether an agent eventually reaches the desired outcome, but they do not directly test whether the model understands the structural meaning of each candidate option or can predict the factual continuation that follows from a specified action within a local causal trajectory. MTTravel-Bench addresses this missing layer by separating option structure scoring from fact-conditioned consequence prediction.
+
+\subsection{Static-to-Dynamic Evaluation}
+A parallel literature directly critiques static evaluation. Dynabench introduced human-and-model-in-the-loop data collection, DynaCode generates complexity-aware code tasks, and Meta Probing Agents synthesise psychometrically grounded task variants. This line of work is important because it shifts evaluation away from fixed public items and toward adaptive, contamination-resistant task construction.
+
+A parallel line of work has questioned the adequacy of static benchmark evaluation. Bowman and Dahl argue that many NLU benchmarks fail to provide reliable and valid measurements once models achieve high scores, and they caution that simply replacing I.I.D. test sets with adversarially constructed or out-of-distribution examples does not by itself solve the deeper problems of benchmark validity, annotation reliability, statistical power, and bias \cite{bowman2021take}. This critique motivates a broader shift from fixed public test sets toward evaluation protocols that can adapt to model progress, reduce reliance on memorized patterns, and expose model weaknesses more systematically.
+
+One approach to this shift is dynamic human-and-model-in-the-loop data construction. Dynabench exemplifies this direction by allowing annotators to create examples that a target model is likely to misclassify while remaining understandable to humans, so that dataset creation, model development, and model assessment can directly inform one another \cite{kiela2021dynabench}. A second approach is dynamic item generation under explicit difficulty or complexity controls. DynaCode applies this idea to code generation by constructing a dynamic, complexity-aware benchmark that generates diverse nested code problems across different levels of code complexity and call-graph structures, thereby reducing reliance on fixed coding test sets and improving robustness against data leakage and memorized solutions \cite{hu2025dynacode}. A third approach uses automated agents to generate evaluation variants. Meta Probing Agents transform original evaluation problems into new probing instances guided by psychometric considerations, enabling more configurable and fine-grained analysis of abilities such as language understanding, problem solving, and domain knowledge \cite{zhu2024dynamic}.
+
+These works are important because they shift evaluation away from fixed and easily saturated test items toward adaptive, contamination-resistant, and diagnostically richer task construction. However, most forms of dynamic evaluation remain at the item level including increase diversity, introduce adversarial examples, or control difficulty, but they do not explicitly model state transitions and decision dependencies across multiple steps, making it difficult to capture consistency and causal reasoning in sequential decision processes. From a computational perspective, these approaches mainly focus on dynamic changes in the input distribution rather than the dynamic structure of the task itself. To address this limitation, we propose MTTravel-Bench, a DAG-based dynamic evaluation framework that formulates evaluation as a decision process with state transitions. Specifically, each evaluation instance corresponds to a decision node in a directed acyclic graph (DAG), where the node includes the current state representation, a set of candidate actions, and a distribution over subsequent states defined by structural constraints. The model is required not only to select a reasonable action given the context, but also to predict the factual consequences of that action along the subsequent trajectory, enabling joint evaluation of decision-making ability and causal consistency within a unified framework.
+
+\subsection{Temporal Reasoning, Forecasting, and Consequence Prediction}
+A third line of related work focuses on temporal reasoning and forecasting. These two directions are related to consequence prediction but are not exactly the same as the task studied in this paper. Temporal reasoning benchmarks mainly test whether large language models (LLMs) can represent and process time-sensitive information under structured task settings. Test of Time restricts this problem to temporal semantics, temporal logic, and temporal arithmetic, and uses controlled synthetic datasets to analyze how model performance is affected by temporal structure, query type, fact ordering, and problem scale \cite{fatemi2024test}. TimelineQA embeds temporal reasoning into timeline-based question answering, where models must answer questions over lifelog timelines that combine free text, temporal signals, geographic information, and event segments \cite{tan2023timelineqa}. More recent benchmarks further improve realism and reduce data contamination. TIME evaluates temporal reasoning in real-world scenarios, covering dense temporal information, rapidly changing event dynamics, and complex temporal dependencies in social interactions \cite{wei2025time}. UnSeenTimeQA constructs time-sensitive QA tasks from synthetic facts, requiring models to reason over sequential and parallel events without relying on memorized real-world knowledge \cite{uddin2024unseentimeqa}. Overall, these benchmarks show that LLMs still have limitations in stable reasoning over temporal relations, evolving event states, and long-range temporal dependencies.
+
+A related but different research direction studies probabilistic forecasting of future events. AutoCast collects future world event questions from forecasting competitions and builds a date-indexed news corpus to evaluate model performance without future information leakage. The results show that neural forecasting systems are still below expert human baselines, although larger models and relevant information retrieval can improve performance \cite{zou2022forecasting}. ForecastBench further introduces a dynamic and continuously updated benchmark of unresolved future-event questions, aiming to reduce data leakage and compare AI systems with human forecasters under realistic forecasting settings \cite{karger2024forecastbench}. Further studies show that introducing retrieval-augmented generation, structured reasoning pipelines, and multi-model prediction aggregation can systematically improve LLM performance on complex forecasting tasks. For example, the retrieval-augmented forecasting framework proposed by Halawi et al. can approach crowd-level human forecasting performance in some settings \cite{halawi2024approaching}. Therefore, this line of work highlights both the difficulty of open-world future prediction and the potential for improving LLM forecasting ability.
+
+The task proposed in this paper does not focus on whether a model can compute temporal relations in isolation, nor on whether it can assign calibrated probabilities to unresolved open-world events. Instead, this work studies action-conditioned factual consequence prediction, given a specific narrative state and a specified factual action, the model must infer the next outcome based on the local causal-temporal structure of the narrative. This makes the evaluation more localized, more controllable, and more diagnostic compared to general forecasting tasks. It also enables fine-grained error analysis at specific decision points, the model may fail due to misunderstanding the candidate action, losing track of prior state information, violating causal-temporal constraints, or generating outputs that are not supported by the narrative trajectory.
+
+\subsection{Computational Memory and MTT-Inspired Agent Evaluation}
+A fourth line of related work concerns memory in LLM-based agents. Here, memory should be understood as a computational and agentic mechanism rather than as human episodic memory in the cognitive-scientific sense. Existing LLM-agent studies typically use memory to refer to the storage, retrieval, updating, reflection, or reuse of information across extended interactions. LongMemEval formalizes this problem for chat assistants by evaluating long-term memory abilities such as information extraction, multi-session reasoning, temporal reasoning, knowledge updating, and abstention across user-assistant histories \cite{wu2024longmemeval}. MemoryAgentBench further moves this problem into incremental agent interactions, testing whether memory agents can retrieve relevant information, learn during interaction, understand long-range histories, and resolve conflicts across accumulated experience \cite{hu2025evaluating}. These benchmarks show that extended interaction history is not automatically usable by LLM agents; it must be selectively maintained, retrieved, and integrated into later reasoning.
+
+A complementary line of work develops memory architectures and experience-driven agents. MemGPT addresses the limited-context problem through virtual context management, treating the LLM as a controller that manages different memory tiers and retrieves relevant information when needed \cite{packer2023memgpt}. Reflexion stores verbal reflections over feedback signals in an episodic memory buffer, allowing agents to improve later trials without updating model weights \cite{shinn2023reflexion}. Generative Agents combine a memory stream, reflection mechanism, and planning module to produce believable long-horizon behavior in an interactive social sandbox \cite{park2023generative}. Voyager extends this experience-driven paradigm to embodied lifelong learning by accumulating reusable skills through an automatic curriculum, a skill library, and iterative feedback-driven prompting \cite{wang2023voyager}. These systems show that computational memory can improve long-horizon behavior, but their use of ``memory'' remains operational namely memory is a mechanism for retaining experience, guiding future decisions, or improving task performance.
+
+The limitation, from the perspective of the present work, is not that existing studies ignore memory. Rather, the limitation is that memory has rarely been connected to mental-time-travel-like evaluation in a structured way. In cognitive science, mental time travel links reconstructed past experience, present self-state, and simulated future events. By contrast, most LLM memory benchmarks ask whether historical information can be retrieved, updated, or used to answer later questions, while memory-augmented agent systems ask whether stored experience improves task completion or behavioral adaptation. They do not directly test whether prior experience is used to interpret the structural meaning of a current action alternative, nor whether it supports prediction of the factual consequence that follows from that action. The proposed DAG-based benchmark therefore treats memory as an MTT-inspired computational condition including prior narrative state is not evaluated as stored information alone, but as the basis for action understanding, future-oriented simulation, and fact-conditioned consequence prediction within a causal-temporal trajectory.
+
+\subsection{Human-Test-Inspired and Construct-Valid Evaluation}
+A final line of related work concerns how AI evaluation can draw on human behavioral testing while avoiding a direct equivalence between model behavior and human cognition. Research on episodic future thinking and mental time travel provides the theoretical basis for this paper, future-oriented behavior is understood as depending on reconstructed past experience, current self-state, and simulated future events \cite{atance2001episodic}. Work on foresight and constructive episodic simulation further shows that anticipating the future often requires recombining elements of prior experience rather than merely retrieving stored facts \cite{suddendorf2007evolution}. Our benchmark adopts this structural insight, but not the human phenomenological claim. We do not assume that LLMs possess episodic memory, self-projection, or subjective future experience. Instead, we transform the MTT-inspired testing logic into an AI-specific task, given a prior narrative state, candidate actions, and a factual action, the model must interpret action alternatives and predict the consequence licensed by the causal-temporal structure of the narrative.
+
+This transformation requires construct-valid benchmark design. Measurement-oriented work argues that benchmarks must specify the target construct, map task instances to that construct, and ensure that scoring supports the intended interpretation \cite{bean2025measuring}. This concern is reinforced by studies showing that benchmark performance can be distorted when datasets contain annotation artifacts or superficial shortcuts rather than requiring the intended reasoning process \cite{gururangan2018annotation}. In our setting, this means that narrative decision competence cannot be reduced to a single final-answer score. A model may understand the structural meaning of an option without selecting the factual action, or it may select an action without being able to predict its consequence. The benchmark therefore separates option structure scoring from fact-conditioned consequence prediction, reducing construct contamination among option understanding, state tracking, causal-temporal consistency, and factual foresight.
+
+Recent agent-evaluation work provides a useful technical background for this separation. AgentBoard shows that multi-turn agent evaluation should go beyond terminal success by analyzing intermediate progress and error types \cite{ma2024agentboard}. TRAJECT-Bench similarly treats the agent trajectory itself as an evaluation object by measuring tool selection, argument correctness, dependency satisfaction, and execution order \cite{he2025trajectbencha}. These works demonstrate the value of process-sensitive evaluation. However, their focus is mainly procedural execution or tool-use correctness, whereas the present benchmark evaluates whether prior narrative state supports action interpretation and consequence prediction. In this sense, our work extends process-sensitive agent evaluation from procedural trace analysis to MTT-inspired consequence measurement.
+
+Human-comparable evaluation further clarifies how human-inspired tasks should be adapted for AI systems. GAIA illustrates the value of comparing models with humans on tasks that are conceptually accessible to humans but difficult for AI assistants \cite{mialon2023gaia}. HCAST and RE-Bench show that human-AI comparisons are informative only when task interfaces, resources, and success criteria are aligned \cite{rein2025hcast}, \cite{wijk2024rebench}. More general frameworks for human-machine comparison emphasize that human and model trials must be carefully matched because humans and algorithms differ in prior knowledge, perception, response constraints, and task interpretation \cite{cowley2022framework,lee2022evaluating}. These studies support the design principle adopted here: human behavioral tests can motivate AI evaluation, but they must be converted into explicit AI tasks with defined inputs, outputs, constraints, and scoring labels.
+
+LLM-as-judge methods are also relevant to this evaluation landscape, especially for scalable assessment of open-ended text generation \cite{zheng2023judging}. G-Eval shows that GPT-based evaluators can improve alignment with human judgments in NLG evaluation through structured prompting procedures \cite{liu2023geval}. MT-Bench and Chatbot Arena further demonstrate the use of LLM judges for comparative evaluation of conversational outputs, while also revealing limitations such as position bias, verbosity bias, self-enhancement bias, and limited reasoning ability \cite{zheng2023judging}. Checklist-based approaches such as CheckEval attempt to improve reliability by decomposing judgments into explicit criteria and binary sub-questions \cite{lee2025checkeval}. These methods are useful for evaluating holistic response quality or human preference, but they are not well suited as the primary evaluator for dynamic narrative consequence prediction. In our setting, the key question is not whether a response is generally preferred, but whether an action alternative is consistent with prior narrative state, local causal constraints, and factual continuation labels. Therefore, the proposed benchmark relies on DAG-derived option scores and structured consequence labels as the main evaluation signals, while LLM-as-judge can only serve as an auxiliary tool for analyzing free-form explanations.
+
+Finally, reasoning, prediction, and memory-augmented agent methods provide experimental baselines rather than defining the benchmark construct itself. ReAct tests whether interleaving reasoning and acting improves agent behavior \cite{yao2022react}. PreAct tests whether explicit prediction improves action planning \cite{fu2025preact}. CLIN and Agent Workflow Memory test whether accumulated experience or reusable workflows improve long-horizon performance \cite{majumder2023clin,wang2024agent}. These methods instantiate different hypotheses about how models might improve on the proposed tasks. The benchmark evaluates whether such mechanisms improve the MTT-inspired capacities of using prior narrative state, interpreting action alternatives, maintaining causal-temporal consistency, and predicting factual consequences.
+\section{Method and Materials}\label{sec3}
+MTTravel-Bench is designed as a source-grounded benchmark rather than an open-ended story-generation environment. The method has three parts. First, narrative materials are converted from local contexts into source-grounded directed acyclic graphs (DAGs). Second, each decision node is used to generate visible action options whose hidden metadata is aligned with the three functional dimensions of mental time travel (MTT). Third, the same decision-node instances are evaluated through two tasks: option-structure profiling and fact-conditioned consequence prediction.
+
+\subsection{Materials and Context-to-DAG Construction}
+MTTravel-Bench evaluates models at key decision nodes in source-grounded narratives. Instead of treating a narrative as a single question-answering instance or an open-ended continuation task, the benchmark converts each retained case into a causal-temporal structure and evaluates model reasoning around local decision points. Each decision node provides a prior narrative context, a set of visible candidate actions, and a factual continuation that can be used for consequence evaluation.
+
+The benchmark construction follows a decision-node-centered pipeline. First, public narrative sources are filtered into cases with identifiable states, actions, decision points, and observable consequences. Second, each case is decomposed into event clauses and represented as a source-grounded narrative DAG $G_i=(V_i,E_i)$, together with a factual trajectory $\tau_i^{*}$ and successor function $\sigma_i$. Third, key decision nodes $D_i$ are identified from the graph. For each $d\in D_i$, the benchmark constructs a decision context $H_d$, visible candidate actions $O_d$, hidden structural profiles $z_{d,j}$, and a factual path $\pi_d^{\mathrm{fact}}$.
+
+These decision-node-centered instances support two evaluation tasks. Task 1 evaluates whether a model can infer the structural profile of visible candidate actions from the decision context. Task 2 evaluates whether a model can predict the consequence structure after the factual action is explicitly specified. The two tasks therefore separate candidate-action structure understanding from fact-conditioned consequence prediction.
+
+\begin{equation}
+G_i=(V_i,E_i),\qquad \tau_i^{*}=(v_{i,0},\ldots,v_{i,T_i}),\qquad
+\sigma_i(v_{i,t})=v_{i,t+1}.
+\end{equation}
+For each $d\in D_i$, the benchmark constructs a local context $H_d$, a visible option set
+$O_d=\{O_{d,1},\ldots,O_{d,K_d}\}$, hidden score profiles $z_{d,j}$, and a factual path
+$\pi_d^{\mathrm{fact}}$.
+
+The overall workflow is summarized as follows:
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.86\linewidth}{\centering Figure placeholder.\\[0.5em]Overview of the MTTravel-Bench construction and evaluation workflow.}}
+\caption{Overview of the MTTravel-Bench construction and evaluation workflow.}
+\label{fig:workflow}
+\end{figure}
+\paragraph{Narrative materials.}
+This study draws on three publicly available narrative sources, including TellMeWhy, NTSB aviation accident investigation records, and FairytaleQA. These sources were selected not only to provide domain diversity, but also because they support the construction of decision-centered narrative trajectories. A usable sample in our benchmark must contain a recoverable prior state, one or more decision nodes, plausible action alternatives, and observable consequences that can be mapped into a DAG-based evaluation instance.
+
+The three sources differ in narrative form and therefore contribute complementary reasoning structures. TellMeWhy provides short everyday narratives with more than 30,000 why-questions and free-form answers about why characters perform particular actions \cite{lal2021tellmewhy}. This source is useful for constructing low-risk commonsense decision cases, where actions are usually explained by ordinary goals, motivations, local constraints, and immediate consequences. NTSB aviation accident investigation records provide high-stakes risk narratives from public aviation investigation data \cite{ntsbCarol}. These cases often describe abnormal states, operational constraints, human responses, and delayed consequences under safety-critical conditions, making them suitable for testing risk anticipation and constraint-sensitive consequence prediction. FairytaleQA contains 278 children-friendly stories and 10,580 explicit and implicit QA pairs for narrative comprehension \cite{xu2022fantastic}. Compared with the other two sources, FairytaleQA is already a finely processed narrative dataset. Its stories usually contain coherent plots, rules, prohibitions, social relations, rescue arcs, and long-distance dependencies. For this reason, we use FairytaleQA as a reference form for narrative decomposition, and then screen NTSB and TellMeWhy cases that can be transformed into a similar decision-centered structure.
+
+The filtering process follows three criteria. We first retain cases with moderate narrative length, because very short samples often lack sufficient prior state or consequence information, whereas overly long or highly technical samples are difficult to decompose into stable local decision nodes. We then require each retained case to contain a clear actor-action structure, an identifiable decision point, and a subsequent continuation that can support factual consequence labeling. Purely descriptive passages, duplicated cases, and samples without recoverable action-consequence structure are excluded. Finally, we balance the resulting benchmark primarily by the number of decision nodes rather than by the number of retained cases. This choice reflects the different narrative granularity of the three sources. FairytaleQA stories generally yield more decision nodes per case, TellMeWhy samples are shorter and yield fewer nodes, and NTSB cases fall between these two patterns. Balancing at the decision-node level allows each domain to contribute a comparable amount of evaluable reasoning structure.
+
+After filtering, each retained narrative is processed into decision-centered units. The current balanced-suite configuration contains three narrative domains: 433 completed NTSB cases with 1,513 decision nodes, 232 FairytaleQA stories capped at 1,598 decision nodes, and 657 TellMeWhy narratives with 1,598 decision nodes. The evaluation unit is the decision-node prompt pair. Option generation and scoring are separated: a rule-guided construction model is used where graph repair or option verbalization is required, whereas model evaluation is performed by the fixed Task 1 and Task 2 scoring modules.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Data-source scale and benchmark roles}
+\label{tab:data-source-scale-and-benchmark-roles}
+\begin{tabular}{p{0.10\textwidth}p{0.10\textwidth}p{0.16\textwidth}p{0.20\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.16\textwidth}}
+\toprule
+Domain & Source & Original depicted & Filtering focus & Retained cases & Decision nodes & Nodes / case & Benchmark role \\
+\midrule
+High-stakes risk & NTSB completed aviation cases & Public aviation investigation records; CAROL aviation data available from 1962 to present & Recent completed cases with moderate length, clear anomaly-response-outcome chains, and observable consequences & 433 & 1,513 & 3.49 & Tests risk anticipation, constraint sensitivity, and delayed consequence prediction \\
+Fictional long-horizon narrative & FairytaleQA & 278 stories; 10,580 QA pairs & Finely processed stories with coherent plots, rules, social relations, and long-distance dependencies & 232 & 1,598 & 6.89 & Tests long-range context use, rule-based inference, and abstract narrative consequence prediction \\
+Everyday commonsense action & TellMeWhy & 30k+ why-questions and free-form answers over short narratives & Short everyday cases with clear actor motivation, local constraints, and ordinary action consequences & 657 & 1,598 & 2.43 & Tests goal inference, local constraint use, and ordinary consequence prediction \\
+Total & -- & -- & -- & 1,322 & 4,709 & 3.56 &  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Context-to-DAG transformation.}
+After source filtering, each retained case is converted into a causal-temporal DAG. The raw story, accident report, or QA item is not used directly as a benchmark instance. Each case is first transformed into a structured narrative trace that records the factual sequence of events, states, actions, constraints, and consequences in the source material. This transformation allows the benchmark to represent each case as a decision-centered structure, rather than as an unconstrained natural-language continuation task.
+
+Let $\mathcal{E}=\{e_i\}_{i=1}^{N}$ denote the retained narrative case set. For each case $e_i$, the construction procedure builds an ordered event-clause trajectory rather than assuming that the narrative strictly alternates between states and actions. The source text is first segmented into sentences and clauses. A clause is retained when it contains cues related to state change, action, constraint, failure, goal, or outcome. Purely static background clauses are filtered out unless they express constraints that affect later action feasibility or consequence interpretation. The retained clauses form the factual backbone from which node order, factual successors, and decision contexts are derived.
+
+\begin{equation}
+\mathcal{E}=\{e_i\}_{i=1}^{N},\qquad
+C_i=(c_{i,0},c_{i,1},\ldots,c_{i,T_i}).
+\end{equation}
+
+
+\begin{equation}
+\tau_i^{*}=(v_{i,0},v_{i,1},\ldots,v_{i,T_i}),\qquad
+\sigma_i(v_{i,t})=v_{i,t+1}.
+\end{equation}
+
+Each retained unit is normalized into a node $v_{i,t}$. The node stores its time index, source span, extracted subject, predicate, object or complement, optional result phrase, role, and semantic tags:
+\begin{equation}
+v_{i,t}=\langle \mathrm{id},t,\mathrm{span},\mathrm{subj},\mathrm{pred},\mathrm{obj},\mathrm{result},\mathrm{role},\mathrm{tags}\rangle .
+\end{equation}
+The role is assigned from the finite set $\{\mathrm{Situation},\mathrm{Task},\mathrm{Action},\mathrm{Consequence}\}$. The semantic tags further indicate cues such as goal, constraint, risk, failure, and outcome. Candidate decision nodes are then inferred from this normalized graph. A node is selected when it has a factual successor and its role is Task or Action. A Consequence node may also be selected when its factual successor is a Task or Action node. If no node satisfies these conditions, the procedure falls back to non-final nodes that have factual successors. In this way, decision-node selection is implemented as a role- and successor-constrained graph operation, rather than as a manual filter over pre-specified factual actions.
+
+The construction process builds the graph directly from the extracted nodes using a set of explicit rules. For each pair of nodes $(v_{i,p}, v_{i,q})$, an edge is considered only when $p < q$ and $q-p \leq h$, where $h$ is the maximum allowed distance between nodes and is set to 5 by default. Each candidate edge is assigned a causal confidence score $w(e_{p,q})$, computed from role compatibility, explicit causal or temporal markers, lexical continuity, counterfactual plausibility, temporal adjacency, and a distance penalty:
+
+\begin{equation}
+w(e_{p,q})=0.30R_{p,q}+0.20M_{p,q}+0.20L_{p,q}+0.20C_{p,q}+0.10A_{p,q}-P_{p,q}.
+\end{equation}
+Here $R_{p,q}$ denotes role-pair compatibility, $M_{p,q}$ explicit causal or temporal markers, $L_{p,q}$ lexical continuity, $C_{p,q}$ counterfactual plausibility, $A_{p,q}$ temporal adjacency, and $P_{p,q}$ the distance penalty. An edge is kept if its score is at least $\theta = 0.25$. To control graph density, each node keeps at most $K = 3$ incoming edges with the highest scores. Because all edges point from earlier nodes to later nodes, the resulting graph is acyclic. Temporal adjacency contributes to the score but is not sufficient on its own to establish a causal relation.
+
+\begin{equation}
+e_{p,q}=(v_{i,p},v_{i,q}),\qquad p<q,\qquad q-p\le h,
+\end{equation}
+\begin{equation}
+E_i=\operatorname{TopK}_{\mathrm{in}}\left(\{e_{p,q}\mid w(e_{p,q})\ge \theta\},K\right),\qquad \theta=0.25,\quad K=3,
+\end{equation}
+where $\operatorname{TopK}_{\mathrm{in}}$ keeps the strongest incoming edges for each target node.
+
+In addition to this rule-based construction, the LLM takes the initial graph as input and modifies node boundaries, subject--predicate--object extraction, role and tag assignments, and weak or missing causal edges, while keeping consistency with the source text and temporal order. After this step, the graph is checked to ensure that node identifiers are valid, node text is non-empty, roles are legal, edges refer to existing nodes, all edges follow forward order, duplicates are removed, and scores fall within valid ranges. If the modified graph does not meet these conditions, the system reuses the original nodes or recomputes edges using the same scoring rules. Finally, the system updates the factual node order, successor relations, final node, decision nodes, and decision contexts. The overall construction therefore combines rule-based extraction, edge scoring, optional adjustment, and structural checking.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Rule schema for source-grounded DAG construction}
+\label{tab:rule-schema-for-source-grounded-dag-cons}
+\begin{tabular}{p{0.20\textwidth}p{0.35\textwidth}p{0.35\textwidth}}
+\toprule
+Construction step & Rule used in construction & Formal object in DAG \\
+\midrule
+Sentence and clause segmentation & The source text is segmented into ordered sentences and clauses. Clauses are retained when they contain state-change, action, constraint, failure, goal, or outcome cues, while pure background clauses are removed unless they express constraints. & Retained clause sequence $C_i = (c_{i,0}, c_{i,1}, \ldots, c_{i,T_i})$ \\
+Event-node normalization & Each retained clause is converted into a graph node with extracted subject, predicate, object or complement, optional result phrase, role, and semantic tags. & Node $v_{i,t} = \langle span, subj, pred, obj, result, role, tags\rangle$ \\
+Factual backbone construction & The retained node order is treated as the factual trajectory of the source narrative. Each non-final node receives a factual successor according to the observed order. & Factual trajectory $\tau_i^* = (v_{i,0}, v_{i,1}, \ldots, v_{i,T_i})$ and successor function $\sigma_i(v_{i,t}) = v_{i,t+1}$ \\
+Candidate causal-edge scoring & Candidate edges are considered only for forward node pairs within the maximum skip window. Each pair is scored by role compatibility, explicit markers, lexical continuity, counterfactual plausibility, temporal adjacency, and distance penalty. & Candidate edge $e_{p,q}=(v_{i,p},v_{i,q})$, where $p<q$ and $q-p \leq h$, with confidence score $w(e_{p,q})$ \\
+Edge thresholding and pruning & Edges are retained when their confidence score reaches the threshold. Dense targets are pruned by keeping only the strongest incoming edges. & Edge set $E_i = \operatorname{TopK}_{\mathrm{in}}(\{e_{p,q} \mid w(e_{p,q}) \geq \theta\},K)$, with at most $K$ incoming edges per target \\
+Final-node inference & The final node is selected as the last Consequence node when one exists. Otherwise, the final factual node is used. & Final node $v_i^{final}$ \\
+Decision-node inference & A node is retained as a decision node when it has a factual successor and its role is Task or Action. A Consequence node is also allowed when its successor is Task or Action. If no node satisfies these conditions, non-final nodes with factual successors are used as fallback candidates. & Decision-node set $D_i \subseteq V_i$ \\
+LLM-assisted repair & The rule-generated baseline graph may be passed to an LLM for repairing node boundaries, extraction fields, roles, tags, and weak or missing source-grounded forward edges. The LLM does not generate answer options at this stage. & Repaired graph proposal $\tilde{G}_i=(\tilde{V}_i,\tilde{E}_i)$ \\
+Local packaging and validation & The local validator checks node legality, forward-only edges, duplicate edges, score ranges, temporal order, and graph computability. Invalid proposals are corrected or replaced by the rule-based baseline. & Validated graph $G_i=(V_i,E_i)$, factual successor map $\sigma_i$, and decision contexts $H_d$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{equation}
+D_i=\{d\in V_i\mid \sigma_i(d)\ \text{exists and}\ [\mathrm{role}(d)\in\{\mathrm{Task},\mathrm{Action}\}\ \text{or}\ 
+(\mathrm{role}(d)=\mathrm{Consequence}\land \mathrm{role}(\sigma_i(d))\in\{\mathrm{Task},\mathrm{Action}\})]\},
+\qquad
+H_d=(v_{i,0},\ldots,d).
+\end{equation}
+
+The output of this stage is a source-grounded DAG $G_i=(V_i,E_i)$ for each retained case, together with factual successor maps, decision contexts, and a structurally validated decision-node set $D_i$. These outputs provide the structural basis for the next stage, where candidate future paths are enumerated and converted into factual and diagnostic action options.
+
+\subsection{Option Generation and Mental-Time-Travel Alignment}
+After the source-grounded DAG is constructed, each validated decision node is treated as a local option-generation site. For a retained case $e_i$, the previous stage provides a graph $G_i=(V_i,E_i)$, a factual successor function $\sigma_i$, a decision-node set $D_i$, and a decision context $H_d$ for each $d\in D_i$. Option generation is performed over this structured graph representation. The raw source text is no longer used as the direct generation input, so that every generated option can be traced to a node, path, or successor relation in the DAG.
+
+For each decision node $d$, the planner enumerates bounded forward paths from $G_i$. A candidate path starts from $d$, follows directed edges in $E_i$, and preserves increasing temporal order. The maximum search depth is denoted by $L$, which is set to 3 in the benchmark construction. The candidate path set $\Pi_d$ is defined by the following constraint.
+
+\begin{equation}
+\Pi_d=\left\{\pi=(v_0,\ldots,v_\ell)\mid v_0=d,\ 1\le \ell\le L,\ \forall r\in\{1,\ldots,\ell\}:(v_{r-1},v_r)\in E_i,\ t(v_{r-1})<t(v_r)\right\}.
+\end{equation}
+
+The factual path is constructed from the factual successor function $\sigma_i$, rather than from the highest-scoring causal path. Starting from $d$, the factual path follows the observed successor relation in the source trajectory. When a factual successor transition is not included in the retained causal edge set $E_i$, the factual transition is still inserted into the candidate set as a source-grounded anchor. This design preserves the factual continuation even when the causal-edge pruning stage removes a local transition.
+
+\begin{equation}
+\pi_d^{\mathrm{fact}}=(d,\sigma_i(d),\sigma_i^2(d),\ldots,\sigma_i^{L}(d)).
+\end{equation}
+
+Each path $\pi\in\Pi_d$ receives a path quality score $Q(\pi)$. For paths composed of retained causal edges, $Q(\pi)$ is computed as the mean confidence score of the edges along the path. For factual-successor transitions inserted from $\sigma_i$ but absent from $E_i$, the transition score is set to (1.0) in order to preserve the source-observed continuation. Thus, $Q(\pi)$ functions as a reliability term for option generation rather than as an independently estimated causal probability.
+
+\begin{equation}
+Q(\pi)=\frac{1}{|\pi|-1}\sum_{r=1}^{|\pi|-1} \bar{w}(v_{r-1},v_r),
+\end{equation}
+where $\bar{w}(u,v)=w(u,v)$ for retained causal edges and $\bar{w}(u,v)=1.0$ for source-observed factual-successor transitions inserted from $\sigma_i$.
+
+The planner computes four families of path scores. The first three correspond to the functional MTT subcapacities used in this benchmark: spatiotemporal reconstruction (STR), self-projection (SP), and self-state or trajectory consistency (SC). STR measures whether an option requires reconstructing prior time, place, event order, causal setup, or constraints. SP measures whether an option requires projecting the future state of the acting subject, including ability, resources, opportunity, risk, or state change. SC measures whether an option remains consistent with the subject's prior role, goal, obligations, and local trajectory. The fourth score, $U$, is an auxiliary utility-oriented action-quality signal and is not treated as an MTT subcapacity.
+
+These scores are derived from graph-level features rather than from surface option wording. The feature set includes path depth $D$, elapsed time-index distance $T$, role-transition ratio $R$, action-space change $A$, self-entity coverage $N_{self}$, self-action ratio $A_{self}$, self-state ratio $S_{self}$, tag continuity $K_{tag}$, role-pair continuity $K_{role}$, adjacent-time ratio $K_{time}$, final-node goal closeness $G$, and risk-tag ratio (Risk). The final-node goal closeness is defined using the distance from the path endpoint $v_m$ to the inferred final node $v_i^{final}$.
+
+\begin{align}
+D(\pi)&=|\pi|-1, &
+T(\pi)&=t(v_m)-t(v_0),\\
+R(\pi)&=\frac{1}{m}\sum_{r=1}^{m}\mathbb{1}[\mathrm{role}(v_r)\ne \mathrm{role}(v_{r-1})],&
+A(\pi)&=1-\frac{|\mathcal{N}^+(v_0)\cap\mathcal{N}^+(v_m)|}{|\mathcal{N}^+(v_0)\cup\mathcal{N}^+(v_m)|+\epsilon}.
+\end{align}
+
+All scale-dependent features are normalized within the candidate path set of the same decision node. This local normalization prevents cross-domain variation in narrative length, graph density, and consequence granularity from dominating option selection. For a feature $x$, the normalized value is defined within $\Pi_d$. Features already bounded in $[0,1]$, including $Q,K_{tag},K_{role}$, and $K_{time}$, are used directly.
+
+\begin{equation}
+\widehat{x}(\pi)=
+\frac{x(\pi)-\min_{\pi'\in\Pi_d}x(\pi')}
+{\max_{\pi'\in\Pi_d}x(\pi')-\min_{\pi'\in\Pi_d}x(\pi')+\epsilon}.
+\end{equation}
+
+The score parameterization is fixed before model evaluation and is used consistently across all domains. The weights are determined through a construct-to-feature calibration protocol. This protocol first assigns each target construct to a compact set of graph features, then enforces local normalization, assigns larger weights to primary indicators of the construct, and checks whether selected option types remain stable under small perturbations of the weights. The resulting default configuration is denoted as $\Theta_0$. Alternative configurations are reserved for ablation and sensitivity analysis, while the main benchmark uses the fixed default parameterization.
+
+\begin{equation}
+\Theta_0=\{w_{\mathrm{STR}},w_{\mathrm{SP}},w_{\mathrm{SC}},w_U,L,\theta,\rho\}.
+\end{equation}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Default parameterization for DAG-based option generation}
+\label{tab:default-parameterization-for-dag-based-o}
+\begin{tabular}{p{0.14\textwidth}p{0.18\textwidth}p{0.18\textwidth}p{0.14\textwidth}p{0.28\textwidth}}
+\toprule
+Score family & Construct measured & Feature group & Default weights & Rationale \\
+\midrule
+$\mathrm{STR}(\pi)$ & Spatiotemporal reconstruction & $\hat{D},\hat{T},\hat{R},\hat{A}$ & (0.30,0.30,0.20,0.20) & Path depth and elapsed narrative distance are primary indicators of reconstruction demand; role transition and neighborhood divergence provide structural separation. \\
+$\mathrm{SP}(\pi)$ & Self-projection & $\hat{N}_{self},\hat{A}_{self},\hat{S}_{self}$ & (0.35,0.30,0.35) & Self-entity coverage and self-state change receive symmetric emphasis; self-action ratio captures whether the path remains actor-centered. \\
+$\mathrm{SC}(\pi\mid H_d)$ & Self-state and trajectory consistency & $K_{tag},K_{role},K_{time},Q$ & (0.30,0.25,0.25,0.20) & Tag continuity is the strongest history-alignment signal; role continuity, temporal adjacency, and path quality provide additional consistency evidence. \\
+$U(\pi)$ & Utility-oriented action quality & $G,Q,\mathrm{SC},Risk$ & (0.35,0.25,0.25,-0.15) & Goal closeness provides the main utility signal; path quality and consistency stabilize the estimate; risk contributes a negative penalty. \\
+$\mathrm{STR}^{*}(\pi),\mathrm{SP}^{*}(\pi)$ & Reliability-weighted selection scores & $\mathrm{STR},\mathrm{SP},Q$ & Multiplicative $Q$ weighting & Reliability weighting prevents structurally attractive but weakly supported paths from dominating diagnostic option selection. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The resulting scoring functions are defined as follows. $\mathrm{STR}$, $\mathrm{SP}$, $\mathrm{SC}$, and $U$ are stored as the Task 1 target profile. $\mathrm{STR}^{*}$ and $\mathrm{SP}^{*}$ are reliability-weighted selection scores used only to choose diagnostic option slots.
+
+\begin{align}
+\mathrm{STR}(\pi)&=0.30\widehat{D}+0.30\widehat{T}+0.20\widehat{R}+0.20\widehat{A},\\
+\mathrm{SP}(\pi)&=0.35\widehat{N}_{\mathrm{self}}+0.30\widehat{A}_{\mathrm{self}}+0.35\widehat{S}_{\mathrm{self}},\\
+\mathrm{SC}(\pi\mid H_d)&=0.30K_{\mathrm{tag}}+0.25K_{\mathrm{role}}+0.25K_{\mathrm{time}}+0.20Q(\pi),\\
+U(\pi)&=0.35G(\pi)+0.25Q(\pi)+0.25\mathrm{SC}(\pi\mid H_d)-0.15\mathrm{Risk}(\pi),\\
+\mathrm{STR}^{*}(\pi)&=\mathrm{STR}(\pi)Q(\pi),\qquad
+\mathrm{SP}^{*}(\pi)=\mathrm{SP}(\pi)Q(\pi).
+\end{align}
+
+The option selector first constructs the factual option from $\pi_d^{\mathrm{fact}}$. It then selects diagnostic options by maximizing $\mathrm{STR}^{*}$, $\mathrm{SP}^{*}$, and $\mathrm{SC}$ under a separation constraint. The separation constraint removes exact duplicate paths, duplicate visible future nodes, and paths whose Jaccard similarity with already selected paths is at least $\rho$. The default threshold is $\rho=0.8$. If the strict constraint leaves no candidate for a diagnostic type, the selector falls back to the highest-scoring non-duplicate path with a distinct visible node. Let $\mathcal{C}_d(S)$ denote the candidate paths that remain after removing paths already in the selected set $S$, paths with duplicate visible nodes, and paths with $J(\pi,S)\ge \rho$.
+
+\begin{align}
+O_{\mathrm{fact}}&=\mathrm{Package}(\pi_d^{\mathrm{fact}}),\\
+O_{\mathrm{STR}}&=\mathrm{Package}\!\left(\arg\max_{\pi\in\mathcal{C}_d(S)}\mathrm{STR}^{*}(\pi)\right),\\
+O_{\mathrm{SP}}&=\mathrm{Package}\!\left(\arg\max_{\pi\in\mathcal{C}_d(S)}\mathrm{SP}^{*}(\pi)\right),\\
+O_{\mathrm{SC}}&=\mathrm{Package}\!\left(\arg\max_{\pi\in\mathcal{C}_d(S)}\mathrm{SC}(\pi\mid H_d)\right).
+\end{align}
+
+
+\begin{equation}
+O_d=\{O_{\mathrm{fact}},O_{\mathrm{STR}},O_{\mathrm{SP}},O_{\mathrm{SC}}\}
+\quad\text{by default.}
+\end{equation}
+
+When enabled, an auxiliary utility option $O_{\mathrm{best}}$ is selected by maximizing $U(\pi)$ under the same separation constraint. This option is included as a rational-action reference and is not treated as a factual label or a gold answer.
+In the LLM-backed generation mode, the same scoring functions are used to construct option slots. Each slot specifies the option type, factual flag, anchor path, target score profile, generation constraints, and visible-text constraints. The LLM is only used to verbalize non-factual actions under the slot constraints. The factual option is always packaged from the original factual successor node, and the generated visible text is not allowed to reveal hidden option types, scores, risk labels, or full future consequences.
+
+The final selectable option set contains the factual option and up to three diagnostic counterfactual options by default. The utility option is included only when explicitly enabled. Each option has visible text and hidden metadata. The visible text contains a short first-step action, while the hidden metadata stores the anchor path, option type, score vector, hidden path, and consequence rubric.
+
+\begin{equation}
+M_{d,j}=\langle \pi_{d,j},\mathrm{type}_{d,j},z_{d,j},Y_{d,j},\mathrm{rubric}_{d,j}\rangle.
+\end{equation}
+
+The factual option has a stricter structured definition than the diagnostic counterfactual options. It is not the best action and is not a recommendation. It is the source-observed continuation anchored by the factual successor map. For each decision node, the hidden factual structure is
+
+\begin{equation}
+\Phi_d^{\mathrm{fact}}=\langle O_{\mathrm{fact}},\pi_d^{\mathrm{fact}},\Gamma_d^{\mathrm{fact}},y_d,Y_d\rangle ,
+\end{equation}
+where $\Gamma_d^{\mathrm{fact}}=(\sigma_i(d),\sigma_i^2(d),\ldots,\sigma_i^B(d))$ is the bounded factual consequence chain used in Task 2, with $B=4$ by default. The structured consequence vector is $y_d=(GA_d,RE_d,CV_d,SEC_d)$, where $GA$ denotes goal advancement, $RE$ risk evolution, $CV$ constraint violation, and $SEC$ secondary consequence. The local outcome tag set $Y_d\subseteq\mathcal{Y}$ records fine-grained consequences such as goal progress or failure, risk change, damage, loss of control, collision, landing outcome, constraint preservation or violation, resource change, injury, fire, weather exposure, and information gain. The tested model sees only the public context and visible action text; $\Phi_d^{\mathrm{fact}}$ is reserved for scoring.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Option types and their alignment with benchmark constructs}
+\label{tab:option-types-and-constructs}
+\begin{tabular}{p{0.20\textwidth}p{0.35\textwidth}p{0.35\textwidth}}
+\toprule
+Option & Graph source & Downstream role \\
+\midrule
+$O_{\mathrm{fact}}$ & Factual path derived from $\pi_d^{\mathrm{fact}}$ & Empirical anchor for fact-conditioned consequence prediction; not equivalent to optimality or recommendation. \\
+$O_{\mathrm{STR}}$ & Separated path or slot anchor selected by $\mathrm{STR}^{*}$ & Tests spatiotemporal reconstruction: prior time, place, sequence, causal setup, and constraints. \\
+$O_{\mathrm{SP}}$ & Separated path or slot anchor selected by $\mathrm{SP}^{*}$ & Tests self-projection: future subject state, resources, ability, opportunity, risk, and state change. \\
+$O_{\mathrm{SC}}$ & Separated path or slot anchor selected by $\mathrm{SC}$ & Tests self-state and trajectory consistency: role, goal, obligation, constraint, and local history alignment. \\
+$O_{\mathrm{best}}$ & Optional path or slot anchor selected by $U$ & Provides an auxiliary utility reference only when enabled; not generated by default and not treated as a gold answer. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The option-generation stage produces the hidden structures used by the two evaluation tasks. Task 1 uses the visible options and their hidden score vectors to evaluate option-structure understanding. Task 2 fixes $O_{\mathrm{fact}}$ and uses the factual continuation to evaluate fact-conditioned consequence prediction. Algorithm~\ref{alg:dag-construction} summarizes the context-to-DAG transformation, and Algorithm~\ref{alg:option-generation} summarizes the option-generation procedure.
+
+\input{algorithm.tex}
+\subsection{Tasks, Metrics, and Benchmark Reporting}
+The benchmark evaluates models at key decision nodes in the source-grounded narrative DAG. For each evaluated decision node $(d\in\mathcal{D}_{\mathrm{eval}})$, the input consists of a decision context $H_d$ and a set of visible candidate actions $O_d=\{O_{d,1},\ldots,O_{d,K_d}\}$. The DAG provides the structural basis for locating the decision node, constructing candidate actions, assigning hidden structural profiles, and tracing factual continuations. The tested model observes only the decision context and the visible action texts. The hidden graph-derived metadata is used only for evaluation.
+
+Task 1 is defined as candidate-action structure profiling. Given $H_d$ and $O_d$, the model predicts the latent structural profile of each visible candidate action. This task evaluates whether the model can recover the structural properties of candidate actions at a decision node. These properties correspond to spatiotemporal reconstruction, self-projection, self-state or trajectory consistency, and local utility.
+
+For a visible candidate action $O_{d,j}$, let $\pi_{d,j}$ denote its hidden anchor path in the narrative DAG. The gold target for Task 1 is the hidden score vector assigned during candidate-action construction:
+
+\begin{equation}
+z_{d,j}=(\mathrm{STR}_{d,j},\mathrm{SP}_{d,j},\mathrm{SC}_{d,j},U_{d,j}).
+\end{equation}
+The reliability-weighted scores $\mathrm{STR}^{*}$ and $\mathrm{SP}^{*}$ are used to select diagnostic options, while the unstarred $\mathrm{STR}$ and $\mathrm{SP}$ fields are retained in the Task 1 target profile. This keeps option selection and model scoring separate.
+
+The model output for Task 1 is a predicted structural profile for each visible candidate action:
+
+\begin{equation}
+\hat{z}_{d,j}=(\widehat{\mathrm{STR}}_{d,j},\widehat{\mathrm{SP}}_{d,j},\widehat{\mathrm{SC}}_{d,j},\widehat{U}_{d,j}).
+\end{equation}
+
+For each score dimension $k\in\mathcal{K}_1$, where $\mathcal{K}_1=\{\mathrm{STR},\mathrm{SP},\mathrm{SC},U\}$, Task 1 uses two scoring components. Score alignment evaluates the numerical closeness between predicted and gold scores. Identification evaluates whether the model assigns the highest score to the same candidate action as the benchmark target in the corresponding dimension. The first component measures calibration of the predicted profile, while the second measures recovery of the strongest structural signal within the local decision context.
+
+\begin{align}
+\mathrm{SA}_k&=1-\frac{1}{\sum_{d\in\mathcal{D}_{\mathrm{eval}}}K_d}
+\sum_{d\in\mathcal{D}_{\mathrm{eval}}}\sum_{j=1}^{K_d}
+|\hat{z}_{d,j,k}-z_{d,j,k}|,\\
+\mathrm{ID}_k&=\frac{1}{|\mathcal{D}_{\mathrm{eval}}|}
+\sum_{d\in\mathcal{D}_{\mathrm{eval}}}
+\mathbb{1}\!\left[\arg\max_j\hat{z}_{d,j,k}=\arg\max_j z_{d,j,k}\right].
+\end{align}
+
+The two components are first averaged over all evaluated decision nodes and then combined into a dimension-level capability score. Since Task 1 is defined as candidate-action structure profiling, identification is used as the principal evidence of within-context structural recognition, while score alignment is retained as a calibration signal.
+
+The Task 1 aggregate score follows the dimensional structure of the construct. The three dimensions $\mathrm{STR}$, $\mathrm{SP}$, and $\mathrm{SC}$ form the MTT-oriented structural profile of candidate actions. The utility dimension $U$ serves as an auxiliary rational-action signal. The final Task 1 score therefore combines the three-dimensional MTT-oriented component with the one-dimensional utility component.
+
+\begin{align}
+C_k&=0.30\,\mathrm{SA}_k+0.70\,\mathrm{ID}_k,\qquad k\in\mathcal{K}_1,\\
+\mathrm{Task1}_{\mathrm{MTT}}&=\frac{C_{\mathrm{STR}}+C_{\mathrm{SP}}+C_{\mathrm{SC}}}{3},\\
+\mathrm{Task1}_{\mathrm{Utility}}&=C_U,\\
+\mathrm{Task1}&=0.75\,\mathrm{Task1}_{\mathrm{MTT}}+0.25\,\mathrm{Task1}_{\mathrm{Utility}}.
+\end{align}
+
+Task 2 is defined as fact-conditioned consequence prediction at the same decision node. For each $d$, the factual action $O_{\mathrm{fact}}$, derived from the factual path $\pi_d^{\mathrm{fact}}$, is explicitly provided to the model together with $H_d$. The model is required to predict the consequence of following this factual action. Thus, Task 2 evaluates consequence prediction under a fixed action condition, rather than factual-action identification.
+
+\begin{equation}
+x_d=(H_d,O_{\mathrm{fact}}),\qquad O_{\mathrm{fact}}=\mathrm{Package}(\pi_d^{\mathrm{fact}}).
+\end{equation}
+
+The target for Task 2 contains two levels. The first level is a structured consequence vector $y_d$, which summarizes the global consequence profile of the factual continuation. It contains four dimensions. $GA_d$ denotes goal advancement and takes values in $\{\mathrm{none},\mathrm{partial},\mathrm{full}\}$. $RE_d$ denotes risk evolution and takes values in $\{\mathrm{decrease},\mathrm{neutral},\mathrm{increase}\}$. $CV_d$ denotes constraint violation and takes values in $\{\mathrm{no},\mathrm{yes}\}$. $SEC_d$ denotes the presence of secondary consequence and takes values in $\{\mathrm{no},\mathrm{yes}\}$.
+
+\begin{equation}
+y_d=(GA_d,RE_d,CV_d,SEC_d).
+\end{equation}
+
+The second level is a set of local outcome tags $Y_d$. These tags represent fine-grained state changes in the factual continuation and complement the structured consequence vector. The fixed tag vocabulary covers outcome categories such as goal completion, goal failure, risk change, damage, loss of control, collision, safe landing, rule violation, resource change, injury, fire, weather exposure, and information gain. The model output therefore contains both a structured prediction $\hat{y}_d$ and a tag-set prediction $\hat{Y}_d$.
+
+The gold labels for Task 2 are derived from the factual continuation in the narrative DAG. Starting from the factual action, the evaluator follows the factual successor function $\sigma_i$ for a fixed consequence horizon $B$, where $B=4$ in the default setting. This produces a bounded continuation $\Gamma_d^{\mathrm{fact}}$. Node roles, semantic tags, and lexical cues in this continuation are mapped to $y_d$ and $Y_d$.
+
+\begin{equation}
+\Gamma_d^{\mathrm{fact}}=(\sigma_i(d),\sigma_i^2(d),\ldots,\sigma_i^{B}(d)),\qquad B=4.
+\end{equation}
+
+Task 2 scoring corresponds to this two-level target structure. At the structured-label level, the evaluator computes macro-F1 for each of the four consequence dimensions and averages them. At the local-outcome level, it computes micro-F1 between predicted and gold outcome tags. Exact match over the four-dimensional structured vector is included as a stricter consistency measure.
+
+\begin{align}
+\mathrm{LabelF1}&=\frac{1}{4}\sum_{k\in\{GA,RE,CV,SEC\}}\mathrm{MacroF1}_k,\\
+P_{\mathrm{LOA}}&=\frac{\sum_{d\in\mathcal{D}_{\mathrm{eval}}} |\hat{Y}_d\cap Y_d|}{\sum_{d\in\mathcal{D}_{\mathrm{eval}}} |\hat{Y}_d|+\epsilon},\qquad
+R_{\mathrm{LOA}}=\frac{\sum_{d\in\mathcal{D}_{\mathrm{eval}}} |\hat{Y}_d\cap Y_d|}{\sum_{d\in\mathcal{D}_{\mathrm{eval}}} |Y_d|+\epsilon},\\
+\mathrm{mLOA}&=\frac{2P_{\mathrm{LOA}}R_{\mathrm{LOA}}}{P_{\mathrm{LOA}}+R_{\mathrm{LOA}}+\epsilon},\\
+\mathrm{StructuredScore}&=0.90\,\mathrm{LabelF1}+0.10\,\mathrm{EM}.
+\end{align}
+
+The final Task 2 score assigns equal primary weight to the two evidence layers, because structured labels and local outcome tags capture complementary aspects of consequence prediction. The exact-match term is retained as a smaller consistency component.
+
+\begin{equation}
+\mathrm{Task2}=0.45\,\mathrm{LabelF1}+0.45\,\mathrm{mLOA}+0.10\,\mathrm{EM}.
+\end{equation}
+
+Score aggregation follows the hierarchical structure of the benchmark. The basic evaluation unit is the decision node, but final reporting is performed at the case and domain levels to account for variation in narrative length and decision-node density. For a case $e_i$, let $D_i$ denote its evaluated decision-node set and $S_d$ denote the score of decision node $d$. The case-level score is
+
+\begin{equation}
+S(e_i)=\frac{1}{|D_i|}\sum_{d\in D_i}S_d.
+\end{equation}
+
+For each source domain $g$, let $E_g$ denote the retained cases from that domain. The domain-level score and final macro-average are defined as
+
+\begin{align}
+S(g)&=\frac{1}{|E_g|}\sum_{e_i\in E_g}S(e_i),\\
+S_{\mathrm{macro}}&=\frac{1}{|\mathcal{G}|}\sum_{g\in\mathcal{G}}S(g).
+\end{align}
+
+Task 1 and Task 2 are reported as complementary measurements at the same class of key decision nodes. Task 1 characterizes whether a model can recover the structural profile of candidate actions within a decision context. Task 2 characterizes whether a model can predict the consequence of a specified factual action. Reporting both task-level scores and their component profiles allows the benchmark to distinguish candidate-action structure understanding from fact-conditioned consequence prediction.
+
+\begin{align}
+\mathrm{Composite}&=\frac{\mathrm{Task1}+\mathrm{Task2}}{2},\\
+\mathrm{BaselineAdjusted}(S)&=\frac{S-S_{\mathrm{baseline}}}{1-S_{\mathrm{baseline}}}.
+\end{align}
+The baseline-adjusted score is used only as a deterministic non-human difficulty reference. Raw Task 1, raw Task 2, and their capability profiles remain the primary construct scores.
+
+\paragraph{Evaluation protocol.}
+The experimental protocol follows the implemented two-task evaluation pipeline rather than a free-form model-comparison setup. All evaluated models receive the same public decision context, the same visible candidate actions, and the same JSON output schemas generated by the benchmark runner. Task 1 uses option-level STR, SP, SC, and U score prediction. Task 2 fixes the factual option and evaluates structured consequence labels and fine-grained outcome tags. The hidden DAG metadata, target\_generation\_scores, factual successor chain, and outcome-tag targets are used only by the scoring program.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model-panel design and evaluation rationale}
+\label{tab:model-panel-design-and-evaluation-ration}
+\begin{tabular}{p{0.20\textwidth}p{0.35\textwidth}p{0.35\textwidth}}
+\toprule
+Experimental axis & Implemented control & Rationale \\
+\midrule
+Dataset and scale & Balanced three-domain suite with decision-node-level accounting & Separates domain effects from the number of evaluable decision points. \\
+Model family & Provider/model families are evaluated with identical prompts and output schemas & Tests whether the benchmark captures general narrative-reasoning ability rather than a provider-specific behavior. \\
+Model size and cost tier & Compact, mid-tier, and larger/frontier models can be compared in the same runner & Assesses whether Task 1 profile recovery and Task 2 consequence prediction show capacity-sensitive patterns. \\
+Reasoning mode & Reasoning and non-reasoning variants are kept as distinct model entries when available & Tests whether explicit reasoning improves factual consequence prediction or instead increases unsupported outcome generation. \\
+Scoring and baselines & Frozen Task 1/Task 2 scoring plus deterministic baseline-only adjustment & Keeps construct scores primary while providing a non-human difficulty reference. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The broad model panel is necessary because MTTravel-Bench is intended as a measurement instrument, not merely as a leaderboard. Evaluating only one frontier model would make it impossible to distinguish benchmark difficulty from the idiosyncrasies of a single provider, decoding stack, or instruction-following style. Therefore, the implemented configuration supports a large set of models that differ in family, scale, cost tier, context capacity, and reasoning mode, while holding prompts, data splits, task definitions, and scoring scripts fixed.
+
+This design also addresses construct validity. Model size is expected to affect long-context state tracking and numerical profile calibration; model family may affect causal-temporal priors and domain robustness; reasoning-oriented variants may improve consequence prediction but may also overgenerate unsupported outcomes; compact models test whether the benchmark is sensitive to capacity limitations and JSON-schema compliance. Reporting Task 1, Task 2, their capability profiles, deterministic baseline-adjusted scores, and domain-stratified summaries makes these differences interpretable without relying on human-performance comparison.
+
+\section{Results}
+\subsection{Main Model Scores Across Narrative Domains}
+The main evaluation uses the balanced MTTravel-Bench suite with 1,322 retained cases and 4,709 evaluated decision nodes. The three source domains contribute comparable decision-node scale but different narrative structures: NTSB contributes 433 cases and 1,513 nodes, FairytaleQA contributes 232 stories and 1,598 capped nodes, and TellMeWhy contributes 657 cases and 1,598 nodes. Each domain was evaluated with the same prompts, output schemas, and scoring program. The official cross-domain leaderboard is computed over the 31 models that reached at least 95\% completion in all three domains.
+
+Table~\ref{tab:main-leaderboard} reports the top cross-domain models by the macro-averaged Composite score. The best observed Composite score is 0.384 for \texttt{gemini-3.1-flash-lite}, followed by 0.380 for \texttt{deepseek-r1-distill-qwen-14b}. Their 95\% case-cluster bootstrap intervals overlap, so the result should be interpreted as a top group rather than a single statistically dominant winner. The table also shows why the benchmark should not be reduced to a single ranking. \texttt{deepseek-r1-distill-qwen-14b} is ranked first on Task 1 but twentieth on Task 2, whereas \texttt{doubao-seed-1-6-251015} is ranked first on Task 2 but only twenty-fourth on Task 1. This inversion indicates that candidate-action structure profiling and fact-conditioned consequence prediction reward different model behaviors.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Main cross-domain leaderboard. Scores are macro-averaged over NTSB, FairytaleQA, and TellMeWhy. The confidence interval is the 95\% case-cluster bootstrap interval for Composite.}
+\label{tab:main-leaderboard}
+\begin{tabular}{r p{0.30\textwidth} l c c c c c}
+\toprule
+Rank & Model & Family & Completion & Task 1 & Task 2 & Composite & Composite 95\% CI \\
+\midrule
+1 & \texttt{gemini-3.1-flash-lite} & Gemini & 1.000 & 0.430 & 0.337 & 0.384 & [0.377, 0.390] \\
+2 & \texttt{deepseek-r1-distill-qwen-14b} & DeepSeek & 0.981 & 0.487 & 0.274 & 0.380 & [0.373, 0.388] \\
+3 & \texttt{qwen3-max} & Qwen & 0.985 & 0.400 & 0.344 & 0.372 & [0.365, 0.378] \\
+4 & \texttt{qwen3-coder-plus} & Qwen & 0.997 & 0.415 & 0.326 & 0.371 & [0.365, 0.377] \\
+5 & \texttt{DeepSeek-V3.2} & DeepSeek & 1.000 & 0.412 & 0.330 & 0.371 & [0.365, 0.377] \\
+6 & \texttt{doubao-seed-1-6-251015} & Doubao & 1.000 & 0.384 & 0.351 & 0.367 & [0.361, 0.373] \\
+7 & \texttt{doubao-seed-2-0-lite-260215} & Doubao & 1.000 & 0.404 & 0.322 & 0.363 & [0.356, 0.370] \\
+8 & \texttt{gpt-5-mini} & OpenAI/GPT & 0.999 & 0.380 & 0.342 & 0.361 & [0.355, 0.367] \\
+9 & \texttt{qwen-plus} & Qwen & 0.985 & 0.375 & 0.337 & 0.356 & [0.350, 0.363] \\
+10 & \texttt{qwen-plus-latest} & Qwen & 0.985 & 0.375 & 0.335 & 0.355 & [0.349, 0.362] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Domain-stratified results further show that MTTravel-Bench measures robustness rather than only average performance. The domain winners are \texttt{gemini-3.1-flash-lite} on NTSB (Composite = 0.467), \texttt{doubao-seed-2-0-lite-260215} on FairytaleQA (Composite = 0.390), and \texttt{deepseek-r1-distill-qwen-14b} on TellMeWhy (Composite = 0.373). Cross-domain Composite correlations are moderate between NTSB and FairytaleQA ($\rho=0.535$) and between FairytaleQA and TellMeWhy ($\rho=0.523$), but weaker between NTSB and TellMeWhy ($\rho=0.207$). This pattern suggests that the benchmark contains a shared narrative-reasoning signal while preserving domain-specific difficulty, especially for high-stakes accident narratives.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.88\linewidth}{\centering Figure placeholder.\\[0.5em]Main model-performance figure showing the cross-domain leaderboard, Task 1/Task 2 decomposition, and domain-specific Composite profiles.}}
+\caption{Main model-performance analysis. The figure should visualize the leaderboard in Table~\ref{tab:main-leaderboard}, the separation between Task 1 and Task 2 scores, and the domain-specific Composite scores for the leading model group.}
+\label{fig:results-main-models}
+\end{figure}
+
+\subsection{Capability Decomposition Supports the Two-Task Design}
+The component analysis tests whether the Task 1 and Task 2 metrics behave as coherent but nonredundant measurements. Model-level associations were computed after ranking models within each dataset and applying synchronized model-cluster permutations across domains, with Benjamini-Hochberg correction over 36 component pairs.
+
+Within Task 1, self-projection and self-consistency are strongly associated ($C_{\mathrm{SP}}$--$C_{\mathrm{SC}}$: $\rho=0.611$, $p<0.0001$, $q=0.0009$), indicating that models that better project candidate futures also tend to preserve trajectory consistency. However, spatiotemporal reconstruction is not reducible to the other Task 1 components: $C_{\mathrm{STR}}$ is negatively associated with utility ($C_U$; $\rho=-0.441$, $p=0.0006$, $q=0.0047$), and its associations with $C_{\mathrm{SP}}$ and $C_{\mathrm{SC}}$ do not reach corrected significance. This supports the intended interpretation that Task 1 contains multiple MTT-oriented subabilities rather than a single generic option-quality score.
+
+Within Task 2, goal-achievement labels and fine-grained local outcome agreement are strongly coupled ($F_{\mathrm{GA}}$--mLOA: $\rho=0.711$, $p<0.0001$, $q=0.0009$), and secondary-consequence labels also align with mLOA ($F_{\mathrm{SEC}}$--mLOA: $\rho=0.500$, $p=0.0001$, $q=0.0012$). In contrast, risk and constraint labels do not collapse into this same signal after correction, which indicates that the structured consequence labels preserve diagnostic information beyond local tag overlap.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Representative component associations supporting the Task 1/Task 2 decomposition. All tests use 20,000 synchronized permutations and global FDR correction over 36 component pairs.}
+\label{tab:component-associations}
+\begin{tabular}{p{0.18\textwidth} p{0.20\textwidth} c c c p{0.32\textwidth}}
+\toprule
+Scope & Component pair & $\rho$ & $p$ & $q$ & Interpretation \\
+\midrule
+Within Task 1 & $C_{\mathrm{SP}}$--$C_{\mathrm{SC}}$ & 0.611 & $<0.0001$ & 0.0009 & Future projection and trajectory consistency co-vary across models. \\
+Within Task 1 & $C_{\mathrm{STR}}$--$C_U$ & -0.441 & 0.0006 & 0.0047 & Reconstruction skill is not equivalent to local utility preference. \\
+Within Task 1 & $C_{\mathrm{SC}}$--$C_U$ & 0.390 & 0.0010 & 0.0060 & Consistent options partly align with utility but remain separately scored. \\
+Within Task 2 & $F_{\mathrm{GA}}$--mLOA & 0.711 & $<0.0001$ & 0.0009 & Goal-achievement labels track local factual outcome agreement. \\
+Within Task 2 & $F_{\mathrm{SEC}}$--mLOA & 0.500 & 0.0001 & 0.0012 & Secondary-consequence prediction is linked to fine-grained outcome recovery. \\
+Cross-task & $C_U$--mLOA & -0.452 & 0.0003 & 0.0022 & Utility-oriented option profiling does not imply better factual outcome recovery. \\
+Cross-task & $C_{\mathrm{STR}}$--mLOA & 0.390 & 0.0052 & 0.0232 & Reconstruction skill has some relation to outcome recovery, but does not subsume Task 2. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The cross-task results are especially important for construct validity. Only two cross-task component pairs survive global FDR correction at the model level, and they point in different directions. This means that Task 1 and Task 2 share some narrative-state information, but they do not measure the same capability. MTTravel-Bench therefore gains diagnostic value by reporting both tasks and their subcomponents instead of using Composite as the only outcome.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.88\linewidth}{\centering Figure placeholder.\\[0.5em]Capability-profile figure showing Task 1 MTT dimensions, Task 2 consequence dimensions, and statistically significant within-task and cross-task component links.}}
+\caption{Capability decomposition across models. The figure should show that the MTT-oriented Task 1 dimensions and the factual-consequence Task 2 dimensions form related but nonidentical capability profiles.}
+\label{fig:results-capability-profiles}
+\end{figure}
+
+\subsection{Case-Level Analysis Shows That Task 1 and Task 2 Define Different Difficulties}
+The case-level analysis treats each retained narrative case as the statistical unit and aggregates across all evaluated decision nodes within the case. This analysis is required because a model-level leaderboard alone cannot determine whether the two tasks become hard on the same cases. Case-level Task 1 uses the additive score defined in the methods section. For Task 2, the case analysis uses an agreement-style score over labels and local outcome tags, because many cases contain only one to eleven decision nodes; this case-difficulty score is used only for case analysis, while the formal macro-F1 formulation remains the primary model-level Task 2 score.
+
+Table~\ref{tab:case-level-results} shows the central case-level findings. Across the full benchmark, 1,301 of 1,322 cases have complete 31-model coverage. The suite contains 83 robust hard cases, 128 high-information cases, and 70 anchor cases. It also contains 86 Task-1-specific hard cases and 93 Task-2-specific hard cases, showing that difficult items are not concentrated in a single task.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Case-level benchmark analysis. Task-correlation statistics report Spearman correlation between Task 1 case difficulty and Task 2 case difficulty within each dataset, with FDR-corrected $q$ values.}
+\label{tab:case-level-results}
+\begin{tabular}{l r r c c c r r r}
+\toprule
+Dataset & Cases & Nodes & Median nodes & Task 1 mean & Task 2 mean & $\rho_{\mathrm{T1,T2}}$ & $q$ & Robust hard \\
+\midrule
+FairytaleQA & 232 & 1,598 & 7 & 0.428 & 0.320 & -0.173 & 0.0248 & 11 \\
+NTSB & 433 & 1,513 & 3 & 0.385 & 0.477 & -0.008 & 0.9306 & 29 \\
+TellMeWhy & 657 & 1,598 & 2 & 0.392 & 0.244 & 0.000 & 0.9947 & 43 \\
+\midrule
+Total & 1,322 & 4,709 & -- & -- & -- & -- & -- & 83 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The task-difficulty correlations are close to zero in NTSB ($\rho=-0.008$, $q=0.9306$) and TellMeWhy ($\rho=0.0003$, $q=0.9947$), and weakly negative in FairytaleQA ($\rho=-0.173$, $q=0.0248$). Thus, a case that is difficult for option-structure profiling is generally not the same kind of case as one that is difficult for factual consequence prediction. A stratified case-permutation analysis of 36 component relationships reaches the same conclusion: 14 component pairs are FDR significant and 12 are practically notable with $|\rho|\ge 0.10$, but no cross-task component pair meets the practical threshold. The only globally significant cross-task case association is $C_{\mathrm{SC}}$--$A_{\mathrm{RE}}$ ($\rho=-0.085$, $q=0.0158$), which is below the predefined practical threshold. This provides direct evidence that Task 1 and Task 2 should be reported as separate benchmark tasks.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.88\linewidth}{\centering Figure placeholder.\\[0.5em]Case-level analysis figure showing case inventory, Task 1/Task 2 difficulty scatterplots, high-information cases, robust hard cases, and component-association heatmaps.}}
+\caption{Case-level benchmark analysis. The figure should show that Task 1 and Task 2 difficulty are largely decoupled at the case level, while also identifying robust hard cases, task-specific hard cases, and high-information cases for future benchmark calibration.}
+\label{fig:results-case-analysis}
+\end{figure}
+
+\subsection{DAG Node Roles and Case Structure Explain Benchmark Difficulty}
+The DAG representation also allows difficulty to be analyzed by node role rather than only by dataset. The role inventory differs substantially across sources. FairytaleQA is dominated by action nodes (1,308 of 1,598 decision nodes; 81.9\%), NTSB is split between action nodes (41.4\%) and task nodes (44.0\%), and TellMeWhy includes a distinctive set of situation nodes (21.9\%) in addition to action, consequence, and task nodes. This confirms that the three domains provide different narrative structures even when their decision-node counts are similar.
+
+Role-conditioned scores show that these structural differences matter. Across Action, Task, and Consequence roles, 24 of 27 paired role contrasts are FDR significant under model-cluster sign-flip tests, and 11 are practically notable with absolute mean difference at least 0.03. For Task 1, self-consistency is higher on Action than Consequence nodes ($\Delta=0.057$, $q<0.001$), while spatiotemporal reconstruction is lower on Task than Consequence nodes ($\Delta=-0.034$, $q<0.001$). For Task 2, constraint-violation prediction is lower on Action than Task nodes ($\Delta=-0.059$, $q<0.001$), and secondary-consequence prediction is much lower on Task than Consequence nodes ($\Delta=-0.111$, $q<0.001$). These role effects are consistent with the benchmark design: different DAG locations emphasize different forms of state reconstruction, future projection, and outcome prediction.
+
+Case-structure associations provide a second diagnostic layer. Twenty-eight structure-score relationships pass both global FDR correction and the practical threshold $|\rho|\ge 0.10$. Larger graphs are associated with higher constraint-violation agreement ($\rho=0.356$, $q<0.001$), whereas denser graphs are associated with lower constraint-violation agreement ($\rho=-0.303$, $q<0.001$). Later decision positions are associated with lower Task 2 difficulty scores ($\rho=-0.207$, $q<0.001$), suggesting that consequences become harder to recover when the decision occurs deeper in the narrative trajectory. The share of consequence nodes is positively associated with secondary-consequence agreement ($\rho=0.221$, $q<0.001$), and the share of task nodes is positively associated with Task 2 score ($\rho=0.161$, $q<0.001$). These findings show that benchmark difficulty is partly explained by interpretable DAG structure rather than by opaque item noise.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.88\linewidth}{\centering Figure placeholder.\\[0.5em]Node-role and case-structure figure showing role inventories, role-conditioned capability profiles, significant role contrasts, and structural difficulty associations.}}
+\caption{DAG role and case-structure analysis. The figure should visualize how Action, Task, Consequence, and Situation nodes contribute differently to Task 1 and Task 2 performance, and how graph structure predicts case difficulty.}
+\label{fig:results-node-structure}
+\end{figure}
+
+\subsection{Sensitivity Analyses and Option-Generation Audit}
+Several analyses test whether the results depend on scoring or coverage choices. First, restricting the case analysis to the 1,301 cases with complete 31-model coverage preserves all 36 component-association directions. The median absolute change in correlation is 0.0038 and the maximum absolute change is 0.0095, indicating that incomplete coverage does not drive the case-level conclusions. Second, the agreement-style Task 2 case score is strongly aligned with the formal F1-style score used for model reporting. The Spearman correlation between the two case-level Task 2 scores is 0.980 overall, with domain-specific correlations of 0.942 for NTSB, 0.923 for FairytaleQA, and 0.951 for TellMeWhy. This supports using the agreement-style score as a case-difficulty diagnostic without replacing the official Task 2 score.
+
+The deterministic baseline analysis is useful as a diagnostic but not as a primary ranking method. Mean raw Task 1 is near the baseline in all three domains, with 21 of 31 FairytaleQA models, 3 of 40 NTSB models, and 4 of 41 TellMeWhy models above the deterministic Task 1 baseline. Task 2 is more strongly affected by label imbalance: no eligible model exceeds the deterministic Task 2 majority baseline in any domain. This does not invalidate the raw Task 2 score, because Task 2 combines structured labels with mLOA and exact match, but it shows that future releases should include calibration controls, label rebalancing, and human or expert reference baselines before making absolute claims about human-level consequence prediction.
+
+Option generation was also examined through prompt-trace auditing. The audited NTSB trace for case WPR25LA019 and decision node d\_v006 shows that the formal DAG path can be inspected end to end, including context extraction, factual-option packaging, Task 1 prompting, and Task 2 prompting. The audit also identifies two important limitations: public context may reveal downstream accident outcomes, and the factual option can sometimes package an observed outcome state rather than a clean selectable action. Therefore, the present results support the value of source-grounded DAG metadata and hidden factual paths, but they should be interpreted together with option-quality controls. A full DAG-construction ablation and option-generation ablation, including rule-only, LLM-only, hybrid construction, factual-option packaging, option-separation thresholds, and leakage controls, remain necessary next experiments rather than completed evidence.
+
+\section{Conclusion}
+MTTravel-Bench frames dynamic narrative consequence prediction as a reproducible measurement problem rather than an open-ended story-generation task. By converting heterogeneous narratives into source-grounded DAGs, the benchmark separates factual anchoring, candidate-action structure, and consequence labeling. The empirical results support this design: model rankings differ across Task 1 and Task 2, component associations show related but nonidentical capability profiles, and case-level analyses show that option-structure difficulty and factual-consequence difficulty do not collapse into a single item-difficulty axis.
+
+The current benchmark therefore provides evidence that dynamic narrative reasoning should be evaluated through both option understanding and fact-conditioned foresight. At the same time, the results identify the next controls required for a stronger benchmark release: calibrated human or expert baselines, label-imbalance calibration for Task 2, DAG-construction ablations, option-generation ablations, and stricter leakage audits for factual options. Future work should also extend the present mainline-only setting into a branching narrative environment and evaluate memory-augmented or planning-augmented agents under the same DAG backbone and scoring metrics.
+
+\begin{appendices}
+
+\section{Section title of first appendix}\label{secA1}
+
+An appendix contains supplementary information that is not an essential part of the text itself but which may be helpful in providing a more comprehensive understanding of the research problem or it is information that is too cumbersome to be included in the body of the paper.
+
+%%=============================================%%
+%% For submissions to Nature Portfolio Journals %%
+%% please use the heading ``Extended Data''.   %%
+%%=============================================%%
+
+%%=============================================================%%
+%% Sample for another appendix section			       %%
+%%=============================================================%%
+
+%% \section{Example of another appendix section}\label{secA2}%
+%% Appendices may be used for helpful, supporting or essential material that would otherwise 
+%% clutter, break up or be distracting to the text. Appendices can consist of sections, figures, 
+%% tables and equations etc.
+
+\end{appendices}
+
+%%===========================================================================================%%
+%% If you are submitting to one of the Nature Portfolio journals, using the eJP submission   %%
+%% system, please include the references within the manuscript file itself. You may do this  %%
+%% by copying the reference list from your .bbl file, paste it into the main manuscript .tex %%
+%% file, and delete the associated \verb+\bibliography+ commands.                            %%
+%%===========================================================================================%%
+\bibliography{sn-bibliography}% common bib file
+%% if required, the content of .bbl file can be included here once bbl is generated
+%%\input sn-article.bbl
+
+\end{document}

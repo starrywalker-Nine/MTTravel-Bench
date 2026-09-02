@@ -1,0 +1,2137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1800"
+   height="1000"
+   viewBox="0 0 1800 1000"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg179"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title">A decision-node measurement case in MTTravel-Bench</title>
+  <desc
+     id="desc">An NTSB air report is converted into a causal history ending at a Mental Time Travel decision node. Task 1 scores possible next actions across STR, SP, SC, and utility. Task 2 predicts the actual outcome after the factual action.</desc>
+  <defs
+     id="defs3">
+    <marker
+       style="overflow:visible"
+       id="Triangle"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+    <linearGradient
+       id="linearGradient182">
+      <stop
+         style="stop-color:#424242;stop-opacity:1;"
+         offset="0"
+         id="stop182" />
+      <stop
+         style="stop-color:#424242;stop-opacity:0;"
+         offset="1"
+         id="stop183" />
+    </linearGradient>
+    <marker
+       id="arrow"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="7"
+       markerHeight="7"
+       orient="auto-start-reverse">
+      <path
+         d="M0 0 L10 5 L0 10 Z"
+         fill="#667085"
+         id="path1" />
+    </marker>
+    <marker
+       id="arrow-blue"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="7"
+       markerHeight="7"
+       orient="auto-start-reverse">
+      <path
+         d="M0 0 L10 5 L0 10 Z"
+         fill="#4776A8"
+         id="path2" />
+    </marker>
+    <marker
+       id="arrow-orange"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="7"
+       markerHeight="7"
+       orient="auto-start-reverse">
+      <path
+         d="M0 0 L10 5 L0 10 Z"
+         fill="#B67835"
+         id="path3" />
+    </marker>
+    <filter
+       id="shadow-sm"
+       x="-0.027272728"
+       y="-0.027272728"
+       width="1.0545455"
+       height="1.0545455"
+       color-interpolation-filters="sRGB">
+      <feDropShadow
+         dx="0"
+         dy="3"
+         stdDeviation="2.5"
+         flood-color="#182233"
+         flood-opacity=".14" />
+    </filter>
+    <filter
+       id="shadow-panel"
+       x="-15%"
+       y="-15%"
+       width="130%"
+       height="140%"
+       color-interpolation-filters="sRGB">
+      <feDropShadow
+         dx="0"
+         dy="6"
+         stdDeviation="6"
+         flood-color="#182233"
+         flood-opacity=".10" />
+    </filter>
+    <filter
+       id="shadow-bridge"
+       x="-0.01059322"
+       y="-0.01059322"
+       width="1.0211864"
+       height="1.0211864"
+       color-interpolation-filters="sRGB">
+      <feDropShadow
+         dx="0"
+         dy="8"
+         stdDeviation="7"
+         flood-color="#182233"
+         flood-opacity=".20" />
+    </filter>
+    <clipPath
+       id="stage-clip">
+      <rect
+         x="40"
+         y="112"
+         width="1720"
+         height="808"
+         rx="10"
+         id="rect3" />
+    </clipPath>
+    <style
+       id="style3">
+      .panel { fill:#FAFBFC; stroke:#C9D0DA; stroke-width:2; }
+      .panel-blue { fill:#F6F9FD; stroke:#7999BD; stroke-width:2; }
+      .panel-orange { fill:#FFF9F0; stroke:#C58A4B; stroke-width:2; }
+      .panel-red { fill:#FFF7F7; stroke:#B9636C; stroke-width:2; }
+      .title { fill:#182233; font:600 23px Arial,Helvetica,sans-serif; }
+      .subtitle { fill:#667085; font:400 14px Arial,Helvetica,sans-serif; }
+      .section { fill:#667085; font:600 11px Arial,Helvetica,sans-serif; letter-spacing:.7px; }
+      .body { fill:#344054; font:400 14px Arial,Helvetica,sans-serif; }
+      .body-small { fill:#475467; font:400 12.5px Arial,Helvetica,sans-serif; }
+      .micro { fill:#667085; font:400 10.5px Arial,Helvetica,sans-serif; }
+      .label { fill:#182233; font:600 14px Arial,Helvetica,sans-serif; }
+      .label-small { fill:#344054; font:600 11px Arial,Helvetica,sans-serif; }
+      .a-body { fill:#344054; font:400 15px Arial,Helvetica,sans-serif; }
+      .a-small { fill:#475467; font:400 11.5px Arial,Helvetica,sans-serif; }
+      .node-role { fill:#667085; font:600 10.5px Arial,Helvetica,sans-serif; letter-spacing:.5px; text-anchor:middle; }
+      .node-value { fill:#182233; font:600 13px Arial,Helvetica,sans-serif; text-anchor:middle; }
+      .edge-label { fill:#475467; font:400 10.5px Arial,Helvetica,sans-serif; text-anchor:middle; paint-order:stroke; stroke:#F6F9FD; stroke-width:4px; stroke-linejoin:round; }
+      .mono { fill:#344054; font:400 12px &quot;Courier New&quot;,monospace; }
+      .mono-bold { fill:#182233; font:600 12px &quot;Courier New&quot;,monospace; }
+      .stage { fill:#182233; }
+      .stage-text { fill:#FFF; font:600 16px Arial,Helvetica,sans-serif; text-anchor:middle; dominant-baseline:middle; }
+      .card { fill:#FFF; stroke:#BFC6D1; stroke-width:1.5; }
+      .context-card { fill:#FFF; stroke:#7898BB; stroke-width:1.6; }
+      .option-card { fill:#FFF; stroke:#C6CCD5; stroke-width:1.3; }
+      .factual-card { fill:#F2F4F6; stroke:#7F8997; stroke-width:1.5; }
+      .target-card { fill:#FFF; stroke:#D3A166; stroke-width:1.3; }
+      .outcome-card { fill:#FFF; stroke:#C9868D; stroke-width:1.3; }
+      .node-situation { fill:#E5EFFA; stroke:#4776A8; stroke-width:1.6; }
+      .node-event { fill:#FCE8CE; stroke:#B67835; stroke-width:1.6; }
+      .node-risk { fill:#F8E0E2; stroke:#B0525E; stroke-width:1.6; }
+      .node-safe { fill:#DFF0E7; stroke:#3F8062; stroke-width:1.6; }
+      .node-neutral { fill:#F2F4F6; stroke:#7B8491; stroke-width:1.6; }
+      .field-mark-situation { fill:#E5EFFA; fill-opacity:.58; stroke:#4776A8; stroke-width:1.1; }
+      .field-mark-event { fill:#FCE8CE; fill-opacity:.72; stroke:#B67835; stroke-width:1.1; }
+      .field-mark-risk { fill:#F8E0E2; fill-opacity:.72; stroke:#B0525E; stroke-width:1.1; }
+      .decision-label { fill:#7A4A16; font:600 12px Arial,Helvetica,sans-serif; letter-spacing:.7px; text-anchor:middle; }
+      .decision-question { fill:#182233; font:600 15px Arial,Helvetica,sans-serif; text-anchor:middle; }
+      .dag-node { stroke-width:2.2; filter:url(#shadow-sm); }
+      .float-panel { filter:url(#shadow-panel); }
+      .float-card { filter:url(#shadow-sm); }
+      .float-bridge { filter:url(#shadow-bridge); }
+      .arrow { fill:none; stroke:#667085; stroke-width:1.8; marker-end:url(#arrow); }
+      .arrow-blue { fill:none; stroke:#4776A8; stroke-width:2; marker-end:url(#arrow-blue); }
+      .arrow-orange { fill:none; stroke:#B67835; stroke-width:2; marker-end:url(#arrow-orange); }
+      .dash-arrow { fill:none; stroke:#8A94A3; stroke-width:1.6; stroke-dasharray:6 5; marker-end:url(#arrow); }
+      .line { fill:none; stroke:#98A2B3; stroke-width:1.4; }
+      .separator { stroke:#D7DCE3; stroke-width:1; }
+      .timeline { fill:none; stroke:#344054; stroke-width:2.2; marker-end:url(#arrow); }
+      .timeline-label { fill:#182233; font:600 15px Arial,Helvetica,sans-serif; letter-spacing:.4px; }
+      .chip { fill:#FFF; stroke:#BFC6D1; stroke-width:1; }
+      .chip-text { fill:#344054; font:600 10px Arial,Helvetica,sans-serif; text-anchor:middle; dominant-baseline:middle; }
+      .heat-text { font:600 10.5px Arial,Helvetica,sans-serif; text-anchor:middle; dominant-baseline:middle; }
+      .icon { fill:none; stroke:#344054; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+      .icon-blue { fill:none; stroke:#4776A8; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+      .icon-orange { fill:none; stroke:#B67835; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+      .icon-green { fill:none; stroke:#3F8062; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+      .icon-red { fill:none; stroke:#B0525E; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+    <linearGradient
+       xlink:href="#linearGradient182"
+       id="linearGradient184"
+       x1="84.838303"
+       y1="410.06299"
+       x2="204.88713"
+       y2="410.06299"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       xlink:href="#linearGradient182"
+       id="linearGradient185"
+       x1="85.175148"
+       y1="204.93114"
+       x2="239.53765"
+       y2="204.93114"
+       gradientUnits="userSpaceOnUse" />
+    <marker
+       style="overflow:visible"
+       id="Triangle-5"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-2" />
+    </marker>
+  </defs>
+  <g
+     id="background" />
+  <g
+     id="timeline-layer">
+    <rect
+       x="43.312893"
+       y="28.015079"
+       width="716.67206"
+       height="51.969841"
+       fill="#e5effa"
+       stroke="#7898bb"
+       stroke-width="1.6"
+       id="rect5"
+       style="fill:#5454f8;fill-opacity:1;stroke:#cdd3dc;stroke-opacity:1" />
+    <rect
+       x="760"
+       y="28"
+       width="560"
+       height="52"
+       fill="#FFF1DE"
+       stroke="#C58A4B"
+       stroke-width="1.6"
+       id="rect6"
+       style="fill:#9c7ae4;fill-opacity:1;stroke:#cdd3dc;stroke-opacity:1" />
+    <path
+       d="m 1320.0071,28.00959 h 405.4782 L 1759.19,54 1725.4853,79.99041 h -405.4782 z"
+       fill="#fbe8ea"
+       stroke="#b9636c"
+       stroke-width="1.6"
+       id="path6"
+       style="fill:#8891ec;fill-opacity:1;stroke:#cdd3dc;stroke-opacity:1" />
+    <text
+       class="timeline-label"
+       x="354.59476"
+       y="63.251141"
+       text-anchor="middle"
+       id="text8"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:23.99999984px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:1.96886"
+       transform="scale(0.9950138,1.0050112)"><tspan
+         id="tspan179"
+         style="stroke-width:1.96886;font-size:23.99999984px">PAST · NARRITVE CONTEXT</tspan></text>
+    <text
+       class="body-small"
+       x="415"
+       y="69"
+       text-anchor="middle"
+       id="text9"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:12.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#ffffff;fill-opacity:1" />
+    <text
+       class="timeline-label"
+       x="1027.063"
+       y="64.416733"
+       text-anchor="middle"
+       id="text10"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:23.99999988px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:1.0255"
+       transform="scale(1.025501,0.97513314)"><tspan
+         id="tspan180"
+         style="stroke-width:1.0255;font-size:23.99999988px">PRESENT · MTT DECISION</tspan></text>
+    <text
+       class="body-small"
+       x="1040"
+       y="69"
+       text-anchor="middle"
+       id="text11"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:12.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#ffffff;fill-opacity:1" />
+    <text
+       class="timeline-label"
+       x="1525.981"
+       y="63.136833"
+       text-anchor="middle"
+       id="text12"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:24px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#ffffff;fill-opacity:1"><tspan
+         id="tspan181"
+         style="font-size:24px">FUTURE · EVALUATE OUTCOME</tspan></text>
+  </g>
+  <g
+     id="stage-framework">
+    <line
+       x1="760"
+       y1="112"
+       x2="760"
+       y2="920"
+       stroke="#D3A166"
+       stroke-width="1.3"
+       id="line16" />
+    <line
+       x1="1320"
+       y1="112"
+       x2="1320"
+       y2="920"
+       stroke="#D8A1A7"
+       stroke-width="1.3"
+       id="line17" />
+    <rect
+       x="39.093559"
+       y="102.87904"
+       width="720.02045"
+       height="841.04657"
+       rx="9.9996023"
+       fill="none"
+       stroke="#aab4c2"
+       stroke-width="1.62865"
+       id="rect17"
+       style="fill:#5454f8;fill-opacity:1" />
+    <text
+       class="edge-label"
+       x="537.55566"
+       y="374.27667"
+       id="text49-9"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;text-anchor:middle;fill:#475467;stroke:#f6f9fd;stroke-width:4px;stroke-linejoin:round;paint-order:stroke">event information extract</text>
+    <text
+       class="edge-label"
+       x="512.43054"
+       y="513.711"
+       id="text49-9-9"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;text-anchor:middle;fill:#475467;stroke:#f6f9fd;stroke-width:4px;stroke-linejoin:round;paint-order:stroke">map to nodes</text>
+    <rect
+       x="762.00153"
+       y="105.23028"
+       width="555.01672"
+       height="839.21979"
+       rx="7.7080407"
+       fill="none"
+       stroke="#aab4c2"
+       stroke-width="1.42836"
+       id="rect17-4"
+       style="fill:#9c7ae4;fill-opacity:1" />
+    <rect
+       x="1323.0317"
+       y="104.50502"
+       width="423.43958"
+       height="839.40039"
+       rx="5.8807044"
+       fill="none"
+       stroke="#aab4c2"
+       stroke-width="1.24775"
+       id="rect17-4-0"
+       style="fill:#8891ec;fill-opacity:1" />
+    <text
+       class="decision-label"
+       x="764"
+       y="516"
+       id="text17">DECISION POINT</text>
+  </g>
+  <g
+     id="context-panel">
+    <text
+       class="title"
+       x="71.266312"
+       y="142.9946"
+       id="text19"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:23px;line-height:normal;font-family:Arial, Helvetica, sans-serif"><tspan
+         style="font-size:26.6667px"
+         id="tspan1">NTSB Bird-Strike Case</tspan></text>
+    <text
+       class="subtitle"
+       x="71.333847"
+       y="170.3269"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:14px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#ffffff;fill-opacity:1"
+       id="text20">Air report → marked fields → extracted events → causal knowledge graph → decision.</text>
+    <!-- Step 1: keep the source context visually dominant and readable. -->
+    <rect
+       x="70.690147"
+       y="186.34549"
+       width="644.7879"
+       height="162.62125"
+       rx="7.8632674"
+       fill="#e8f0f8"
+       stroke="#a9bcd1"
+       stroke-width="1"
+       opacity="0.82"
+       id="rect21"
+       style="fill:#ffffff;fill-opacity:1" />
+    <text
+       class="section"
+       x="83.987648"
+       y="210.65379"
+       id="text23"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:16px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#000000;fill-opacity:1"><tspan
+         style="fill:#000000;fill-opacity:1;font-size:16px"
+         id="tspan182">NTSB AIR REPORT</tspan></text>
+    <rect
+       x="531.37695"
+       y="202.10513"
+       width="154.43732"
+       height="22.769648"
+       rx="6.1163292"
+       fill="#e5effa"
+       stroke="#7898bb"
+       id="rect23"
+       style="stroke-width:1.23036" />
+    <text
+       class="label-small"
+       x="605.17773"
+       y="217.98996"
+       text-anchor="middle"
+       id="text24"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:11px;line-height:normal;font-family:Arial, Helvetica, sans-serif">REPO ID: CEN25LA070</text>
+    <g
+       transform="matrix(2.1848831,0,0,2.1285219,575.10411,231.75715)"
+       id="g24">
+      <path
+         class="icon-blue"
+         d="M 0,12 H 27 M 3,4 H 24 V 33 H 3 Z m 5,7 H 19 M 8,17 H 19 M 8,23 h 8"
+         id="path24" />
+    </g>
+    <!-- Source-field marks use the same semantics as the extracted units below. -->
+    <rect
+       class="field-mark-situation"
+       x="139.00464"
+       y="231.32381"
+       width="59"
+       height="20"
+       rx="3"
+       id="rect24"
+       style="fill:#a3ddee;fill-opacity:1" />
+    <rect
+       class="field-mark-situation"
+       x="339.30359"
+       y="231.32587"
+       width="91.705986"
+       height="19.995857"
+       rx="3.0232742"
+       id="rect25"
+       style="fill:#ba75e8;fill-opacity:1" />
+    <rect
+       class="field-mark-situation"
+       x="252.30412"
+       y="253.18997"
+       width="71.526161"
+       height="19.068371"
+       rx="3.9014275"
+       id="rect26"
+       style="fill:#ba75e8;fill-opacity:1" />
+    <rect
+       class="field-mark-situation"
+       x="206.20636"
+       y="275.39508"
+       width="138.98615"
+       height="19.423079"
+       rx="2.9157932"
+       id="rect27" />
+    <rect
+       class="field-mark-event"
+       x="168.98093"
+       y="297.77722"
+       width="71.00473"
+       height="18.570284"
+       rx="2.9585304"
+       id="rect28"
+       style="fill:#f8c98b;fill-opacity:1" />
+    <rect
+       class="field-mark-risk"
+       x="139.64241"
+       y="318.7012"
+       width="256.0741"
+       height="19.984869"
+       rx="3.0852304"
+       id="rect29"
+       style="fill:#eeaeb4;fill-opacity:1" />
+    <text
+       class="a-body"
+       x="142.91783"
+       y="246.8672"
+       id="text29"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:15px;line-height:normal;font-family:Arial, Helvetica, sans-serif">At night, a Part 135 flight was 5 miles north</text>
+    <text
+       class="a-body"
+       x="142.00464"
+       y="268.32382"
+       id="text30"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:15px;line-height:normal;font-family:Arial, Helvetica, sans-serif">of its destination at 3,000 ft when it encountered birds.</text>
+    <text
+       class="a-body"
+       x="142.00464"
+       y="289.32382"
+       id="text31"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:15px;line-height:normal;font-family:Arial, Helvetica, sans-serif">The crew did not see the birds before impact.</text>
+    <text
+       class="a-body"
+       x="142.00464"
+       y="312.32382"
+       id="text32"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:15px;line-height:normal;font-family:Arial, Helvetica, sans-serif">The bird strike made the captain's</text>
+    <text
+       class="a-body"
+       x="142.00464"
+       y="333.32382"
+       id="text33"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:15px;line-height:normal;font-family:Arial, Helvetica, sans-serif">primary flight display (PFD) unusable.</text>
+    <!-- Step 2: expose the extracted event/state units as a separate operation. -->
+    <path
+       class="arrow-blue"
+       d="m 466.91435,345.22951 v 37.51036"
+       id="path33"
+       style="fill:#ffffff;fill-opacity:0.977169;stroke:#101010;stroke-width:2.37454;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)" />
+    <path
+       class="arrow-blue"
+       d="m 466.55805,487.49997 v 37.51036"
+       id="path33-7"
+       style="fill:#ffffff;fill-opacity:0.977169;stroke:#101010;stroke-width:2.37454;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle-5)" />
+    <rect
+       x="70.792351"
+       y="395.07922"
+       width="640.89893"
+       height="92"
+       rx="7.8706884"
+       fill="#dde5ee"
+       opacity="0.42"
+       id="rect34"
+       style="stroke-width:1.06037;fill:#e0e0fe;fill-opacity:1;opacity:1" />
+    <text
+       class="section"
+       x="84.03801"
+       y="414"
+       id="text37"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:16px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#1c1c1c;fill-opacity:1">EVENT EXTRACTION</text>
+    <text
+       class="micro"
+       x="500"
+       y="414"
+       id="text38">ordered evidence units</text>
+    <rect
+       x="89.289871"
+       y="431.28989"
+       width="88"
+       height="29"
+       rx="4"
+       fill="#E5EFFA"
+       stroke="#7898bb"
+       id="rect38"
+       style="fill:#a3ddee;fill-opacity:1" />
+    <text
+       class="label-small"
+       x="134"
+       y="450"
+       text-anchor="middle"
+       id="text39">Nighttime</text>
+    <rect
+       x="186"
+       y="432"
+       width="108"
+       height="29"
+       rx="4"
+       fill="#E5EFFA"
+       stroke="#7898BB"
+       id="rect39"
+       style="fill:#ba75e8;fill-opacity:1" />
+    <text
+       class="label-small"
+       x="240"
+       y="450"
+       text-anchor="middle"
+       id="text40">5 mi · 3,000 ft</text>
+    <rect
+       x="302"
+       y="432"
+       width="108"
+       height="29"
+       rx="4"
+       fill="#E5EFFA"
+       stroke="#7898BB"
+       id="rect40" />
+    <text
+       class="label-small"
+       x="356"
+       y="450"
+       text-anchor="middle"
+       id="text41">Birds not visible</text>
+    <rect
+       x="418"
+       y="432"
+       width="91"
+       height="29"
+       rx="4"
+       fill="#FCE8CE"
+       stroke="#B67835"
+       id="rect41"
+       style="fill:#f8c98b;fill-opacity:1" />
+    <text
+       class="label-small"
+       x="463.5"
+       y="450"
+       text-anchor="middle"
+       id="text42">Bird strike</text>
+    <rect
+       x="517.02185"
+       y="432.02182"
+       width="121.08476"
+       height="28.956347"
+       rx="4.3634148"
+       fill="#f8e0e2"
+       stroke="#b0525e"
+       id="rect42"
+       style="stroke-width:1.04365;fill:#eeaeb4;fill-opacity:1" />
+    <text
+       class="label-small"
+       x="577.10382"
+       y="450"
+       text-anchor="middle"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:11px;line-height:normal;font-family:Arial, Helvetica, sans-serif"
+       id="text43">Primary display failed</text>
+    <!-- Step 3: extracted units become nodes and directed causal edges. -->
+    <text
+       class="micro"
+       x="377.47919"
+       y="496.17361"
+       id="text44"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif"><tspan
+         style="fill:#fefefe;fill-opacity:1"
+         id="tspan186" /></text>
+    <text
+       class="section"
+       x="79.928612"
+       y="519.06421"
+       id="text46"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:11px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#000000;fill-opacity:1"><tspan
+         style="font-size:16px"
+         id="tspan185">CAUSAL KNOWLEDGE GRAPH</tspan></text>
+    <!-- The causal DAG is rendered as a typed knowledge graph. -->
+    <path
+       class="arrow-blue"
+       d="M162 578H241"
+       id="path47" />
+    <text
+       class="edge-label"
+       x="198.94586"
+       y="564.38916"
+       id="text48"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif">obscures</text>
+    <text
+       class="edge-label"
+       x="359.44839"
+       y="616.87646"
+       id="text49"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif">raises risk</text>
+    <path
+       class="arrow-blue"
+       d="m 265.77438,670.75475 c 62.3376,-3.47898 105.97391,-22.03351 143.37647,-37.10907"
+       id="path49" />
+    <text
+       class="edge-label"
+       x="315.74954"
+       y="654.48096"
+       id="text50"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif">exposure</text>
+    <path
+       class="arrow-orange"
+       d="m 492,625 h 56.51635"
+       id="path50" />
+    <text
+       class="edge-label"
+       x="525"
+       y="612"
+       id="text51">damages</text>
+    <g
+       id="history-node-night"
+       transform="translate(-5.4974532)"
+       style="fill:#a3ddee;fill-opacity:1">
+      <circle
+         cx="125"
+         cy="578"
+         r="42"
+         fill="#d7e6f6"
+         opacity="0.42"
+         id="circle51"
+         style="fill:#a3ddee;fill-opacity:1" />
+      <circle
+         class="node-situation dag-node"
+         cx="126.83248"
+         cy="579.83246"
+         r="36"
+         id="circle52"
+         style="fill:#a3ddee;fill-opacity:1" />
+      <text
+         class="node-value"
+         x="125"
+         y="584.83759"
+         id="text53"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:13px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#a3ddee;fill-opacity:1">Night</text>
+    </g>
+    <text
+       class="edge-label"
+       x="119.93536"
+       y="567.74805"
+       id="text48-5"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;text-anchor:middle;fill:#475467;stroke:#f6f9fd;stroke-width:4px;stroke-linejoin:round;paint-order:stroke"><tspan
+         id="tspan5"
+         x="119.93536"
+         y="567.74805">TIME</tspan></text>
+    <path
+       class="arrow-blue"
+       d="M326 590C360 594 386 604 409 615"
+       id="path48" />
+    <g
+       id="history-node-position"
+       transform="translate(52.279096,9.8306493)"
+       style="fill:#ba75e8;fill-opacity:1">
+      <ellipse
+         cx="159.31509"
+         cy="659.49823"
+         fill="#d7e6f6"
+         opacity="0.42"
+         id="circle53"
+         rx="54.250896"
+         ry="54.935799"
+         style="stroke-width:1.11413;fill:#ba75e8;fill-opacity:1" />
+      <circle
+         class="node-situation dag-node"
+         cx="160"
+         cy="670"
+         r="42"
+         id="circle54"
+         style="fill:#ba75e8;fill-opacity:1" />
+      <text
+         class="node-role"
+         x="160"
+         y="654"
+         id="text54"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#ba75e8;fill-opacity:1" />
+      <text
+         class="node-value"
+         x="160"
+         y="675"
+         id="text55"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:13px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#ba75e8;fill-opacity:1">5 mi north</text>
+      <text
+         class="a-small"
+         x="160"
+         y="693"
+         text-anchor="middle"
+         id="text56"
+         style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:11.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#ba75e8;fill-opacity:1">3,000 ft</text>
+    </g>
+    <g
+       id="history-node-birds"
+       style="fill:#e5effa;fill-opacity:1"
+       transform="translate(0,-1.2216563)">
+      <circle
+         cx="284"
+         cy="578"
+         r="49"
+         fill="#D7E6F6"
+         opacity="0.42"
+         id="circle56"
+         style="fill:#e5effa;fill-opacity:1" />
+      <circle
+         class="node-situation dag-node"
+         cx="284"
+         cy="578"
+         r="42"
+         id="circle57"
+         style="fill:#e5effa;fill-opacity:1" />
+      <text
+         class="node-role"
+         x="284"
+         y="565"
+         id="text57"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#e5effa;fill-opacity:1" />
+      <text
+         class="node-value"
+         x="284"
+         y="587"
+         id="text58"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:13px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#e5effa;fill-opacity:1">Birds</text>
+      <text
+         class="a-small"
+         x="284"
+         y="605"
+         text-anchor="middle"
+         id="text59"
+         style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:11.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#e5effa;fill-opacity:1">Visible: No</text>
+    </g>
+    <g
+       id="history-node-strike"
+       style="fill:#f8c98b;fill-opacity:1">
+      <circle
+         cx="450"
+         cy="625"
+         r="49"
+         fill="#F5D9B4"
+         opacity=".46"
+         id="circle59"
+         style="fill:#f8c98b;fill-opacity:1" />
+      <circle
+         class="node-event dag-node"
+         cx="450"
+         cy="625"
+         r="42"
+         id="circle60"
+         style="fill:#f8c98b;fill-opacity:1" />
+      <text
+         class="node-role"
+         x="450"
+         y="615"
+         id="text60"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;fill:#f8c98b;fill-opacity:1" />
+      <text
+         class="node-value"
+         x="450"
+         y="639"
+         id="text61"
+         style="fill:#f8c98b;fill-opacity:1">Bird strike</text>
+    </g>
+    <text
+       class="edge-label"
+       x="452.02911"
+       y="615.4278"
+       id="text48-5-2-7-3"
+       style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;text-anchor:middle;fill:#475467;stroke:#f6f9fd;stroke-width:4px;stroke-linejoin:round;paint-order:stroke"><tspan
+         x="452.02911"
+         y="615.4278"
+         id="tspan7-4">IMPACT EVENT</tspan></text>
+    <g
+       id="history-node-pfd"
+       style="fill:#eeaeb4;fill-opacity:1">
+      <circle
+         cx="600"
+         cy="625"
+         r="49"
+         fill="#F3CDD1"
+         opacity=".46"
+         id="circle61"
+         style="fill:#eeaeb4;fill-opacity:1" />
+      <circle
+         class="node-risk dag-node"
+         cx="600"
+         cy="625"
+         r="42"
+         id="circle62"
+         style="fill:#eeaeb4;fill-opacity:1" />
+      <text
+         class="node-role"
+         x="600"
+         y="606"
+         id="text62"
+         style="fill:#eeaeb4;fill-opacity:1">SYSTEM STATE</text>
+      <text
+         class="node-value"
+         x="600"
+         y="630"
+         id="text63"
+         style="fill:#eeaeb4;fill-opacity:1">Primary display</text>
+      <text
+         class="a-small"
+         x="600"
+         y="649"
+         text-anchor="middle"
+         id="text64"
+         style="fill:#eeaeb4;fill-opacity:1">Unusable</text>
+    </g>
+    <!-- The decision packet makes the final transition explicit. -->
+    <rect
+       x="78"
+       y="733"
+       width="572"
+       height="113"
+       rx="7"
+       fill="#E5EBF2"
+       opacity=".45"
+       id="rect64" />
+    <line
+       class="separator"
+       x1="292"
+       y1="744"
+       x2="292"
+       y2="819"
+       id="line65" />
+    <g
+       transform="translate(92 741)"
+       id="g65">
+      <path
+         class="icon-blue"
+         d="M0 12s12-11 24 0c-12 11-24 0-24 0z"
+         id="path65" />
+      <circle
+         cx="12"
+         cy="12"
+         r="3.5"
+         fill="none"
+         stroke="#4776A8"
+         stroke-width="1.5"
+         id="circle65" />
+    </g>
+    <text
+       class="section"
+       x="128"
+       y="756"
+       id="text65">VISIBLE AT d_t</text>
+    <text
+       class="mono"
+       x="92"
+       y="785"
+       id="text66">x_d = [G_&lt;t, d_t]</text>
+    <text
+       class="micro"
+       x="92"
+       y="810"
+       id="text67">Context-derived nodes and edges only</text>
+    <text
+       class="section"
+       x="316"
+       y="756"
+       id="text68">DECISION QUESTION</text>
+    <text
+       class="label"
+       x="316"
+       y="786"
+       id="text69">How should the captain respond</text>
+    <text
+       class="label"
+       x="316"
+       y="807"
+       id="text70">after the primary flight display fails?</text>
+  </g>
+  <text
+     class="edge-label"
+     x="285.56006"
+     y="568.89508"
+     id="text48-5-2"
+     style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;text-anchor:middle;fill:#475467;stroke:#f6f9fd;stroke-width:4px;stroke-linejoin:round;paint-order:stroke"><tspan
+       x="285.56006"
+       y="568.89508"
+       id="tspan6">RISK DETECTION</tspan></text>
+  <text
+     class="edge-label"
+     x="214.32339"
+     y="659.19586"
+     id="text48-5-2-7"
+     style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:10.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif;text-anchor:middle;fill:#475467;stroke:#f6f9fd;stroke-width:4px;stroke-linejoin:round;paint-order:stroke"><tspan
+       x="214.32339"
+       y="659.19586"
+       id="tspan7">FLIGHT POSITION</tspan></text>
+  <g
+     id="decision-hub">
+    <!-- A layered choice wheel makes the decision transition explicit and dynamic. -->
+    <ellipse
+       cx="766.18884"
+       cy="627.00348"
+       fill="#fff1de"
+       stroke="#d3a166"
+       stroke-width="1.49119"
+       opacity="0.95"
+       id="circle72"
+       rx="92.82428"
+       ry="86.473526" />
+    <!-- Choice rays sit behind the main disc and emerge at four option ports. -->
+    <path
+       class="line"
+       d="M786 614C800 610 803 578 815 578"
+       id="path72" />
+    <path
+       class="line"
+       d="M786 614C803 612 811 603 818 603"
+       id="path73" />
+    <path
+       class="line"
+       d="M786 616C803 618 811 628 818 628"
+       id="path74" />
+    <path
+       class="line"
+       d="M786 616C800 621 803 653 815 653"
+       id="path75" />
+    <text
+       class="mono-bold"
+       x="758"
+       y="590"
+       text-anchor="middle"
+       id="text76">d_t</text>
+    <circle
+       cx="758"
+       cy="615"
+       r="12"
+       fill="#C58A4B"
+       id="circle77" />
+    <text
+       x="758"
+       y="621"
+       text-anchor="middle"
+       style="fill:#FFF;font:600 18px Arial,Helvetica,sans-serif"
+       id="text77">?</text>
+    <text
+       class="decision-question"
+       x="758"
+       y="642"
+       id="text78">WHAT NEXT?</text>
+    <text
+       class="micro"
+       x="758"
+       y="658"
+       text-anchor="middle"
+       id="text79">choose an action</text>
+    <circle
+       class="float-card"
+       cx="818"
+       cy="578"
+       r="11"
+       fill="#182233"
+       stroke="#FFF"
+       stroke-width="1.2"
+       id="circle79" />
+    <text
+       class="stage-text"
+       x="818"
+       y="579"
+       style="font-size:9px"
+       id="text80">A</text>
+    <circle
+       class="float-card"
+       cx="829"
+       cy="603"
+       r="11"
+       fill="#4776A8"
+       stroke="#FFF"
+       stroke-width="1.2"
+       id="circle80" />
+    <text
+       class="stage-text"
+       x="829"
+       y="604"
+       style="font-size:9px"
+       id="text81">B</text>
+    <circle
+       class="float-card"
+       cx="829"
+       cy="628"
+       r="11"
+       fill="#76579B"
+       stroke="#FFF"
+       stroke-width="1.2"
+       id="circle81" />
+    <text
+       class="stage-text"
+       x="829"
+       y="629"
+       style="font-size:9px"
+       id="text82">C</text>
+    <circle
+       class="float-card"
+       cx="818"
+       cy="653"
+       r="11"
+       fill="#3F8062"
+       stroke="#FFF"
+       stroke-width="1.2"
+       id="circle82" />
+    <text
+       class="stage-text"
+       x="818"
+       y="654"
+       style="font-size:9px"
+       id="text83">D</text>
+    <text
+       class="label-small"
+       x="764"
+       y="689"
+       text-anchor="middle"
+       id="text84">MENTAL TIME TRAVEL</text>
+    <text
+       class="micro"
+       x="764"
+       y="702"
+       text-anchor="middle"
+       id="text85">starts here</text>
+  </g>
+  <g
+     id="task1-panel">
+    <text
+       class="title"
+       x="795.48071"
+       y="144.92781"
+       id="text87"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:23px;line-height:normal;font-family:Arial, Helvetica, sans-serif"><tspan
+         style="font-size:26.6667px"
+         id="tspan2">Task 1 · Possible Actions</tspan></text>
+    <rect
+       x="1112"
+       y="169"
+       width="170"
+       height="21"
+       rx="4"
+       fill="#E5EFFA"
+       stroke="#7898BB"
+       id="rect87" />
+    <text
+       class="label-small"
+       x="1197"
+       y="184"
+       text-anchor="middle"
+       id="text88">MENTAL TIME TRAVEL</text>
+    <text
+       class="subtitle"
+       x="870"
+       y="187"
+       id="text89">Generate options and score each one.</text>
+    <g
+       transform="translate(870 213)"
+       id="g91">
+      <path
+         class="icon-orange"
+         d="M0 11s12-12 25 0c-13 12-25 0-25 0z"
+         id="path89" />
+      <circle
+         cx="12.5"
+         cy="11"
+         r="3.5"
+         fill="none"
+         stroke="#B67835"
+         stroke-width="1.6"
+         id="circle89" />
+      <text
+         class="section"
+         x="39"
+         y="15"
+         id="text90">POSSIBLE NEXT ACTIONS</text>
+      <text
+         class="section"
+         x="315"
+         y="15"
+         id="text91">TASK 1 SCORES</text>
+    </g>
+    <line
+       x1="870"
+       y1="249"
+       x2="892"
+       y2="249"
+       stroke="#182233"
+       stroke-width="2"
+       id="line91" />
+    <text
+       class="micro"
+       x="899"
+       y="253"
+       id="text92">actual path</text>
+    <line
+       x1="967"
+       y1="249"
+       x2="989"
+       y2="249"
+       stroke="#8A94A3"
+       stroke-width="1.6"
+       stroke-dasharray="5 4"
+       id="line92" />
+    <text
+       class="micro"
+       x="996"
+       y="253"
+       id="text93">imagined paths</text>
+    <text
+       class="micro"
+       x="1136"
+       y="255"
+       text-anchor="middle"
+       id="text94">STR</text>
+    <text
+       class="micro"
+       x="1172"
+       y="255"
+       text-anchor="middle"
+       id="text95">SP</text>
+    <text
+       class="micro"
+       x="1208"
+       y="255"
+       text-anchor="middle"
+       id="text96">SC</text>
+    <text
+       class="micro"
+       x="1244"
+       y="255"
+       text-anchor="middle"
+       id="text97">U</text>
+    <!-- Option A -->
+    <rect
+       class="factual-card float-card"
+       x="868"
+       y="266"
+       width="409"
+       height="92"
+       rx="6"
+       id="rect97" />
+    <circle
+       cx="892"
+       cy="294"
+       r="14"
+       fill="#182233"
+       id="circle97" />
+    <text
+       class="stage-text"
+       x="892"
+       y="295"
+       style="font-size:12px"
+       id="text98">A</text>
+    <text
+       class="label-small"
+       x="916"
+       y="290"
+       id="text99">Confirm the remaining</text>
+    <text
+       class="label-small"
+       x="916"
+       y="307"
+       id="text100">flight instruments.</text>
+    <rect
+       x="916"
+       y="318"
+       width="157"
+       height="22"
+       rx="4"
+       fill="#182233"
+       id="rect100" />
+    <text
+       x="994.5"
+       y="333"
+       text-anchor="middle"
+       style="fill:#FFF;font:600 10px Arial,Helvetica,sans-serif"
+       id="text101">ACTUAL · O_fact → TASK 2</text>
+    <line
+       x1="1105"
+       y1="277"
+       x2="1105"
+       y2="347"
+       stroke="#D7DCE3"
+       stroke-width="1"
+       id="line101" />
+    <rect
+       x="1120"
+       y="277"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#CF8138"
+       id="rect101" />
+    <rect
+       x="1156"
+       y="277"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#F2D8B5"
+       id="rect102" />
+    <rect
+       x="1192"
+       y="277"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#E4AD6C"
+       id="rect103" />
+    <rect
+       x="1228"
+       y="277"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#EFC99D"
+       id="rect104" />
+    <text
+       class="heat-text"
+       x="1136"
+       y="293"
+       fill="#FFF"
+       id="text104">.69</text>
+    <text
+       class="heat-text"
+       x="1172"
+       y="293"
+       fill="#344054"
+       id="text105">.35</text>
+    <text
+       class="heat-text"
+       x="1208"
+       y="293"
+       fill="#344054"
+       id="text106">.50</text>
+    <text
+       class="heat-text"
+       x="1244"
+       y="293"
+       fill="#344054"
+       id="text107">.39</text>
+    <!-- Option B -->
+    <rect
+       class="option-card float-card"
+       x="868"
+       y="370"
+       width="409"
+       height="92"
+       rx="6"
+       id="rect107" />
+    <circle
+       cx="892"
+       cy="398"
+       r="14"
+       fill="#4776A8"
+       id="circle107" />
+    <text
+       class="stage-text"
+       x="892"
+       y="399"
+       style="font-size:12px"
+       id="text108">B</text>
+    <text
+       class="label-small"
+       x="916"
+       y="394"
+       id="text109">Record the strike location</text>
+    <text
+       class="label-small"
+       x="916"
+       y="411"
+       id="text110">and altitude.</text>
+    <rect
+       x="916"
+       y="422"
+       width="119"
+       height="22"
+       rx="4"
+       fill="#FFF"
+       stroke="#4776A8"
+       stroke-width="1.2"
+       stroke-dasharray="4 3"
+       id="rect110" />
+    <text
+       class="label-small"
+       x="975.5"
+       y="437"
+       text-anchor="middle"
+       id="text111">IMAGINED · STR</text>
+    <line
+       x1="1105"
+       y1="381"
+       x2="1105"
+       y2="451"
+       stroke="#D7DCE3"
+       stroke-width="1"
+       id="line111" />
+    <rect
+       x="1120"
+       y="381"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#A64B22"
+       id="rect111" />
+    <rect
+       x="1156"
+       y="381"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#E7B77A"
+       id="rect112" />
+    <rect
+       x="1192"
+       y="381"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#F1D5B1"
+       id="rect113" />
+    <rect
+       x="1228"
+       y="381"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#E5AF70"
+       id="rect114" />
+    <text
+       class="heat-text"
+       x="1136"
+       y="397"
+       fill="#FFF"
+       id="text114">.85</text>
+    <text
+       class="heat-text"
+       x="1172"
+       y="397"
+       fill="#344054"
+       id="text115">.47</text>
+    <text
+       class="heat-text"
+       x="1208"
+       y="397"
+       fill="#344054"
+       id="text116">.36</text>
+    <text
+       class="heat-text"
+       x="1244"
+       y="397"
+       fill="#344054"
+       id="text117">.49</text>
+    <!-- Option C -->
+    <rect
+       class="option-card float-card"
+       x="868"
+       y="474"
+       width="409"
+       height="92"
+       rx="6"
+       id="rect117" />
+    <circle
+       cx="892"
+       cy="502"
+       r="14"
+       fill="#76579B"
+       id="circle117" />
+    <text
+       class="stage-text"
+       x="892"
+       y="503"
+       style="font-size:12px"
+       id="text118">C</text>
+    <text
+       class="label-small"
+       x="916"
+       y="498"
+       id="text119">Shift primary monitoring</text>
+    <text
+       class="label-small"
+       x="916"
+       y="515"
+       id="text120">to the first officer.</text>
+    <rect
+       x="916"
+       y="526"
+       width="116"
+       height="22"
+       rx="4"
+       fill="#FFF"
+       stroke="#76579B"
+       stroke-width="1.2"
+       stroke-dasharray="4 3"
+       id="rect120" />
+    <text
+       class="label-small"
+       x="974"
+       y="541"
+       text-anchor="middle"
+       id="text121">IMAGINED · SP</text>
+    <line
+       x1="1105"
+       y1="485"
+       x2="1105"
+       y2="555"
+       stroke="#D7DCE3"
+       stroke-width="1"
+       id="line121" />
+    <rect
+       x="1120"
+       y="485"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#EFC797"
+       id="rect121" />
+    <rect
+       x="1156"
+       y="485"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#C8752F"
+       id="rect122" />
+    <rect
+       x="1192"
+       y="485"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#E9BE87"
+       id="rect123" />
+    <rect
+       x="1228"
+       y="485"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#F5E1C8"
+       id="rect124" />
+    <text
+       class="heat-text"
+       x="1136"
+       y="501"
+       fill="#344054"
+       id="text124">.40</text>
+    <text
+       class="heat-text"
+       x="1172"
+       y="501"
+       fill="#FFF"
+       id="text125">.70</text>
+    <text
+       class="heat-text"
+       x="1208"
+       y="501"
+       fill="#344054"
+       id="text126">.45</text>
+    <text
+       class="heat-text"
+       x="1244"
+       y="501"
+       fill="#344054"
+       id="text127">.31</text>
+    <!-- Option D -->
+    <rect
+       class="option-card float-card"
+       x="868"
+       y="578"
+       width="409"
+       height="92"
+       rx="6"
+       id="rect127" />
+    <circle
+       cx="892"
+       cy="606"
+       r="14"
+       fill="#3F8062"
+       id="circle127" />
+    <text
+       class="stage-text"
+       x="892"
+       y="607"
+       style="font-size:12px"
+       id="text128">D</text>
+    <text
+       class="label-small"
+       x="916"
+       y="602"
+       id="text129">Notify ATC of the</text>
+    <text
+       class="label-small"
+       x="916"
+       y="619"
+       id="text130">display failure.</text>
+    <rect
+       x="916"
+       y="630"
+       width="116"
+       height="22"
+       rx="4"
+       fill="#FFF"
+       stroke="#3F8062"
+       stroke-width="1.2"
+       stroke-dasharray="4 3"
+       id="rect130" />
+    <text
+       class="label-small"
+       x="974"
+       y="645"
+       text-anchor="middle"
+       id="text131">IMAGINED · SC</text>
+    <line
+       x1="1105"
+       y1="589"
+       x2="1105"
+       y2="659"
+       stroke="#D7DCE3"
+       stroke-width="1"
+       id="line131" />
+    <rect
+       x="1120"
+       y="589"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#B65A23"
+       id="rect131" />
+    <rect
+       x="1156"
+       y="589"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#F2D8B5"
+       id="rect132" />
+    <rect
+       x="1192"
+       y="589"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#ECC28E"
+       id="rect133" />
+    <rect
+       x="1228"
+       y="589"
+       width="32"
+       height="32"
+       rx="3"
+       fill="#F8EBD9"
+       id="rect134" />
+    <text
+       class="heat-text"
+       x="1136"
+       y="605"
+       fill="#FFF"
+       id="text134">.79</text>
+    <text
+       class="heat-text"
+       x="1172"
+       y="605"
+       fill="#344054"
+       id="text135">.35</text>
+    <text
+       class="heat-text"
+       x="1208"
+       y="605"
+       fill="#344054"
+       id="text136">.42</text>
+    <text
+       class="heat-text"
+       x="1244"
+       y="605"
+       fill="#344054"
+       id="text137">.24</text>
+    <rect
+       class="target-card float-card"
+       x="868"
+       y="704"
+       width="409"
+       height="142"
+       rx="7"
+       id="rect137" />
+    <g
+       transform="translate(888 724)"
+       id="g138">
+      <rect
+         class="icon-orange"
+         x="0"
+         y="12"
+         width="25"
+         height="21"
+         rx="3"
+         id="rect138" />
+      <path
+         class="icon-orange"
+         d="M6 12V7a6.5 6.5 0 0 1 13 0v5"
+         id="path138" />
+    </g>
+    <text
+       class="section"
+       x="930"
+       y="739"
+       id="text138">TASK 1 EVALUATION TARGET</text>
+    <text
+       class="label"
+       x="888"
+       y="774"
+       id="text139">Option × dimension score matrix</text>
+    <text
+       class="mono"
+       x="888"
+       y="800"
+       id="text140">S_Task1 ∈ [0,1]^(4×4)</text>
+    <text
+       class="body-small"
+       x="888"
+       y="826"
+       id="text141">Shown values are benchmark targets for Task 1.</text>
+    <!-- The decision fans out into one factual and three counterfactual action anchors. -->
+    <path
+       class="arrow"
+       d="M829 578H850V312H868"
+       id="path141" />
+    <path
+       class="dash-arrow"
+       d="M840 603H850V416H868"
+       id="path142" />
+    <path
+       class="dash-arrow"
+       d="M840 628H850V520H868"
+       id="path143" />
+    <path
+       class="dash-arrow"
+       d="M829 653H850V624H868"
+       id="path144" />
+    <!-- Row A also feeds Task 2, independently of Task 1 predictions. -->
+    <path
+       d="M1277 312H1305V264H1363"
+       fill="none"
+       stroke="#182233"
+       stroke-width="2.2"
+       marker-end="url(#arrow)"
+       id="path145" />
+    <rect
+       class="float-card"
+       x="1280"
+       y="284"
+       width="80"
+       height="22"
+       rx="4"
+       fill="#182233"
+       stroke="#FFF"
+       stroke-width="1"
+       id="rect145" />
+    <text
+       x="1320"
+       y="299"
+       text-anchor="middle"
+       style="fill:#FFF;font:600 9.5px Arial,Helvetica,sans-serif"
+       id="text145">TO TASK 2</text>
+  </g>
+  <g
+     id="task2-panel">
+    <text
+       class="title"
+       x="1350.8416"
+       y="144.92781"
+       id="text147"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:23px;line-height:normal;font-family:Arial, Helvetica, sans-serif"><tspan
+         style="font-size:26.6667px"
+         id="tspan3">Task 2 · Actual Outcome</tspan></text>
+    <rect
+       x="1572"
+       y="169"
+       width="160"
+       height="21"
+       rx="4"
+       fill="#E5EFFA"
+       stroke="#7898BB"
+       id="rect147" />
+    <text
+       class="label-small"
+       x="1652"
+       y="184"
+       text-anchor="middle"
+       id="text148">MENTAL TIME TRAVEL</text>
+    <text
+       class="subtitle"
+       x="1365"
+       y="187"
+       id="text149">Option A → factual outcome.</text>
+    <rect
+       class="factual-card float-card"
+       x="1363"
+       y="218"
+       width="369"
+       height="93"
+       rx="7"
+       id="rect149" />
+    <text
+       class="section"
+       x="1383"
+       y="243"
+       id="text150">FACTUAL ACTION FROM OPTION A</text>
+    <rect
+       x="1652"
+       y="228"
+       width="60"
+       height="21"
+       rx="4"
+       fill="#182233"
+       id="rect150" />
+    <text
+       x="1682"
+       y="242"
+       text-anchor="middle"
+       style="fill:#FFF;font:600 10px Arial,Helvetica,sans-serif"
+       id="text151">O_fact</text>
+    <circle
+       cx="1396"
+       cy="273"
+       r="14"
+       fill="#182233"
+       id="circle151" />
+    <text
+       class="stage-text"
+       x="1396"
+       y="274"
+       style="font-size:12px"
+       id="text152">A</text>
+    <text
+       class="label"
+       x="1422"
+       y="269"
+       id="text153">Confirm the remaining</text>
+    <text
+       class="label"
+       x="1422"
+       y="290"
+       id="text154">flight instruments.</text>
+    <text
+       class="section"
+       x="1365"
+       y="346"
+       id="text155">WHAT ACTUALLY HAPPENED NEXT</text>
+    <!-- outcome 1 -->
+    <g
+       id="outcome-instruments"
+       transform="translate(1428 401)">
+      <circle
+         class="node-safe float-card"
+         cx="0"
+         cy="0"
+         r="44"
+         id="circle155" />
+      <rect
+         class="icon-green"
+         x="-23"
+         y="-20"
+         width="46"
+         height="31"
+         rx="3"
+         id="rect155" />
+      <path
+         class="icon-green"
+         d="M-15-10h12 M-15-2h19 M-15 6h10 M-18 20h36"
+         id="path155" />
+      <text
+         class="body-small"
+         x="0"
+         y="63"
+         text-anchor="middle"
+         id="text156">first-officer display</text>
+      <text
+         class="body-small"
+         x="0"
+         y="79"
+         text-anchor="middle"
+         id="text157">+ standby available</text>
+    </g>
+    <!-- outcome 2 -->
+    <g
+       id="outcome-engines"
+       transform="translate(1648 401)">
+      <circle
+         class="node-safe float-card"
+         cx="0"
+         cy="0"
+         r="44"
+         id="circle157" />
+      <path
+         class="icon-green"
+         d="M-28 6h24l15-14h11l-7 14 16 8H12L0 27h-10l3-13h-21z"
+         id="path157" />
+      <path
+         class="icon-green"
+         d="M-14-10l8 16"
+         id="path158" />
+      <text
+         class="body-small"
+         x="0"
+         y="63"
+         text-anchor="middle"
+         id="text158">engines</text>
+      <text
+         class="body-small"
+         x="0"
+         y="79"
+         text-anchor="middle"
+         id="text159">unaffected</text>
+    </g>
+    <!-- outcome 3 -->
+    <g
+       id="outcome-landing"
+       transform="translate(1538 548)">
+      <circle
+         class="node-safe float-card"
+         cx="0"
+         cy="0"
+         r="49"
+         id="circle159" />
+      <path
+         class="icon-green"
+         d="M-31 15h62 M-24 8l9-24 9 24 M8 8l9-24 9 24 M-22 4h44"
+         id="path159" />
+      <path
+         class="icon-green"
+         d="M-18-19h35l13-7-7 12-16 4h-25z"
+         id="path160" />
+      <text
+         class="body-small"
+         x="0"
+         y="69"
+         text-anchor="middle"
+         id="text160">landed without</text>
+      <text
+         class="body-small"
+         x="0"
+         y="85"
+         text-anchor="middle"
+         id="text161">further incident</text>
+    </g>
+    <!-- outcome 4 -->
+    <g
+       id="outcome-no-injury"
+       transform="translate(1417.8716,694.12842)">
+      <circle
+         class="node-safe float-card"
+         cx="0"
+         cy="0"
+         r="40"
+         id="circle161" />
+      <circle
+         class="icon-green"
+         cx="-7"
+         cy="-11"
+         r="8"
+         id="circle162" />
+      <path
+         class="icon-green"
+         d="M -7,-3 V 21 M -21,7 H 7 m -24,21 10,-7 10,7 m 9,-46 7,7 14,-18"
+         id="path162" />
+      <text
+         class="body-small"
+         x="0"
+         y="59"
+         text-anchor="middle"
+         id="text162"
+         style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:12.5px;line-height:normal;font-family:Arial, Helvetica, sans-serif">no injuries</text>
+    </g>
+    <!-- outcome 5 -->
+    <g
+       id="outcome-damage"
+       transform="translate(1648 684)">
+      <circle
+         class="node-risk float-card"
+         cx="0"
+         cy="0"
+         r="40"
+         id="circle163" />
+      <path
+         class="icon-red"
+         d="M-27 2h54 M-21-10h42v24h-42z M-12-18l8 8 M7-18l-8 8 M-15 22h30"
+         id="path163" />
+      <text
+         class="body-small"
+         x="0"
+         y="59"
+         text-anchor="middle"
+         id="text163">forward-fuselage</text>
+      <text
+         class="body-small"
+         x="0"
+         y="75"
+         text-anchor="middle"
+         id="text164">damage</text>
+    </g>
+    <path
+       class="arrow"
+       d="M1472 401H1600"
+       id="path164" />
+    <path
+       class="arrow"
+       d="M1450 439L1509 507"
+       id="path165" />
+    <path
+       class="arrow"
+       d="M1626 439L1567 507"
+       id="path166" />
+    <path
+       class="arrow"
+       d="M1513 590L1454 649"
+       id="path167" />
+    <path
+       class="arrow"
+       d="M1563 590L1622 649"
+       id="path168" />
+    <rect
+       class="outcome-card float-card"
+       x="1363"
+       y="798"
+       width="369"
+       height="90"
+       rx="7"
+       id="rect168" />
+    <text
+       class="section"
+       x="1383"
+       y="823"
+       id="text168">OUTCOME LABELS</text>
+    <text
+       class="mono"
+       x="1383"
+       y="850"
+       id="text169">GA · RE · CV · SEC</text>
+    <text
+       class="body-small"
+       x="1383"
+       y="874"
+       id="text170">outcome tags: safe landing · damage · resource change</text>
+  </g>
+  <g
+     id="legend-footer">
+    <line
+       x1="40"
+       y1="946"
+       x2="1760"
+       y2="946"
+       stroke="#D7DCE3"
+       stroke-width="1"
+       id="line170" />
+    <g
+       transform="translate(430 958)"
+       id="g174">
+      <circle
+         class="node-situation"
+         cx="8.5"
+         cy="11.5"
+         r="8.5"
+         id="circle172" />
+      <path
+         class="arrow-blue"
+         d="M18 11.5H31"
+         id="path172" />
+      <circle
+         class="node-event"
+         cx="40.5"
+         cy="11.5"
+         r="8.5"
+         id="circle173" />
+      <path
+         class="arrow-orange"
+         d="M50 11.5H63"
+         id="path173" />
+      <circle
+         class="node-risk"
+         cx="72.5"
+         cy="11.5"
+         r="8.5"
+         id="circle174" />
+    </g>
+    <text
+       class="section"
+       x="525"
+       y="965"
+       id="text174">CAUSAL NODE TYPES</text>
+    <text
+       class="body-small"
+       x="525"
+       y="985"
+       id="text175">condition → event → system state</text>
+    <g
+       transform="translate(850 955)"
+       id="g176">
+      <circle
+         cx="10"
+         cy="11"
+         r="9"
+         fill="#FFF1DE"
+         stroke="#B67835"
+         stroke-width="1.5"
+         id="circle175" />
+      <path
+         class="icon-orange"
+         d="M10 11h8 M18 11l7-6 M18 11l8 0 M18 11l7 6"
+         id="path175" />
+      <path
+         class="dash-arrow"
+         d="M28 11h40"
+         id="path176" />
+    </g>
+    <text
+       class="section"
+       x="930"
+       y="965"
+       id="text176">DECISION → POSSIBLE ACTIONS</text>
+    <text
+       class="body-small"
+       x="930"
+       y="985"
+       id="text177">solid = actual · dashed = imagined · Task 1 scores</text>
+    <g
+       transform="translate(1335 955)"
+       id="g178">
+      <circle
+         class="node-safe"
+         cx="9"
+         cy="11"
+         r="8"
+         id="circle177" />
+      <path
+         class="arrow"
+         d="M18 11h25"
+         id="path177" />
+      <circle
+         class="node-risk"
+         cx="52"
+         cy="11"
+         r="8"
+         id="circle178" />
+    </g>
+    <text
+       class="section"
+       x="1400"
+       y="965"
+       id="text178">FACTUAL-OUTCOME REASONING</text>
+    <text
+       class="body-small"
+       x="1400"
+       y="985"
+       id="text179">follow the actual action · outcome labels</text>
+  </g>
+  <metadata
+     id="metadata179">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>A decision-node measurement case in MTTravel-Bench</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>
